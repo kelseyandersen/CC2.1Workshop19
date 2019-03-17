@@ -1,3 +1,5 @@
+
+
 name: RTB Seed System Cluter Ibadan, Nigeria 2019
 output_dir: '.'
 navbar:
@@ -8,14 +10,15 @@ navbar:
   - text: Introduction to R
     menu:
     - text: Introduction to R
+      href: APS2018_Tidyverse.html
   - text: Networks in R
     menu:
     - text: Networks in R
+      href: Describing_Networks.html
     - text: Epidemic Networks
-
-  - text: Additional Resources
-    menu:
-    - text: Resources
+      href: EpidemicNetworks.html
+      
+      
 output:
   html_document:
     theme: flatly
@@ -25,4 +28,3 @@ output:
     toc_float: yes
     lib_dir: site_libs
     self_contained: no
-

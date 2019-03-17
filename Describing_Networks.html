@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Kelsey Andersen, Robin Choudhury, &amp; James Fulton" />
+
+
+<title>Visualizing and Describing Networks</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { font-weight: bold; } /* Keyword */
+code > span.dt { text-decoration: underline; } /* DataType */
+code > span.co { font-style: italic; } /* Comment */
+code > span.al { font-weight: bold; } /* Alert */
+code > span.er { font-weight: bold; } /* Error */
+code > span.wa { font-style: italic; } /* Warning */
+code > span.cf { font-weight: bold; } /* ControlFlow */
+code > span.pp { font-weight: bold; } /* Preprocessor */
+code > span.do { font-style: italic; } /* Documentation */
+code > span.an { font-style: italic; } /* Annotation */
+code > span.cv { font-style: italic; } /* CommentVar */
+code > span.in { font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">CC2.1 R Workshop</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Welcome</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Introduction to R
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="APS2018_Tidyverse.html">Introduction to R</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Networks in R
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Describing_Networks.html">Networks in R</a>
+    </li>
+    <li>
+      <a href="EpidemicNetworks.html">Epidemic Networks</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Visualizing and Describing Networks</h1>
+<h4 class="author"><em>Kelsey Andersen, Robin Choudhury, &amp; James Fulton</em></h4>
+
+</div>
+
+
+<div id="slides-for-this-section-can-be-downloaded-here" class="section level4">
+<h4>Slides for this section can be downloaded here:</h4>
+</div>
+<div id="networks-with-igraph" class="section level2">
+<h2>Networks with igraph</h2>
+<p>First, make sure you have loaded package <em>igraph</em>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages(&quot;igraph&quot;)</span>
+<span class="kw">library</span>(igraph)</code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;igraph&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     as_data_frame, groups, union</code></pre>
+<pre><code>## The following objects are masked from &#39;package:purrr&#39;:
+## 
+##     compose, simplify</code></pre>
+<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     crossing</code></pre>
+<pre><code>## The following object is masked from &#39;package:tibble&#39;:
+## 
+##     as_data_frame</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     decompose, spectrum</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     union</code></pre>
+<div id="simple-networks" class="section level3">
+<h3>Simple Networks</h3>
+<p>First, create a simple adjacency matrix with three rows and three columns</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mat1 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>,<span class="dv">0</span>, <span class="dv">0</span>), <span class="dt">nrow=</span><span class="dv">3</span>, <span class="dt">ncol=</span><span class="dv">3</span>) ### matrix function 
+mat1</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    0    0    1
+## [2,]    1    0    0
+## [3,]    0    1    0</code></pre>
+<p>Use the igraph function <em>graph_from_adjacency_matrix()</em> to create a network object from your graph, then use the <em>plot()</em> function to plot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mat2 &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>(mat1)
+<span class="kw">plot</span>(mat2, <span class="dt">edge.arrow.size =</span> <span class="dv">1</span>) ## set the size of the arrows </code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-3-1.png" width="672" />  </p>
+<p>Alternatively, create the same network by telling igraph what links you would like.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mat3 &lt;-<span class="st"> </span><span class="kw">graph</span>(<span class="dt">edges=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>, <span class="dv">3</span>,<span class="dv">2</span>, <span class="dv">2</span>,<span class="dv">1</span>), <span class="dt">n=</span><span class="dv">3</span>, <span class="dt">directed=</span>T ) <span class="co"># use graph function and list edges </span>
+<span class="kw">plot</span>(mat3, <span class="dt">edge.arrow.size =</span> <span class="dv">1</span>)</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-4-1.png" width="672" />   ## Network Aestetics<br />
+Many parts of a network can be sized and colored to help communicate results more clearly.<br />
+Here, for example, we color the nodes and change the size and position of the labels using <em>vertex.color =</em> and <em>vertex.label.dist =</em></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mat3, <span class="dt">edge.arrow.size =</span> <span class="dv">1</span>, <span class="dt">vertex.color =</span> <span class="st">&quot;purple&quot;</span>, <span class="dt">vertex.size =</span> <span class="dv">20</span>, <span class="dt">vertex.label.cex =</span> <span class="dv">2</span>, <span class="dt">vertex.label.dist =</span> <span class="fl">3.5</span>)</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="generating-random-networks" class="section level3">
+<h3>Generating Random Networks</h3>
+<p>Networks can also be generated randomly<br />
+  Here we create an empty graph (no links):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eg &lt;-<span class="st"> </span><span class="kw">make_empty_graph</span>(<span class="dv">50</span>) ## make a graph with 50 nodes
+<span class="kw">plot</span>(eg, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>, <span class="dt">vertex.color =</span> <span class="st">&quot;plum&quot;</span>) ## no node labels.</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eg <span class="co"># view graph object</span></code></pre></div>
+<pre><code>## IGRAPH 739268e D--- 50 0 -- 
+## + edges from 739268e:</code></pre>
+<p>And a full graph (all possible links = 780):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fg &lt;-<span class="st"> </span><span class="kw">make_full_graph</span>(<span class="dv">40</span>)
+<span class="kw">plot</span>(fg, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>, <span class="dt">vertex.color =</span> <span class="st">&quot;plum&quot;</span>)</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fg <span class="co"># view graph</span></code></pre></div>
+<pre><code>## IGRAPH aefabf8 U--- 40 780 -- Full graph
+## + attr: name (g/c), loops (g/l)
+## + edges from aefabf8:
+##  [1] 1-- 2 1-- 3 1-- 4 1-- 5 1-- 6 1-- 7 1-- 8 1-- 9 1--10 1--11 1--12
+## [12] 1--13 1--14 1--15 1--16 1--17 1--18 1--19 1--20 1--21 1--22 1--23
+## [23] 1--24 1--25 1--26 1--27 1--28 1--29 1--30 1--31 1--32 1--33 1--34
+## [34] 1--35 1--36 1--37 1--38 1--39 1--40 2-- 3 2-- 4 2-- 5 2-- 6 2-- 7
+## [45] 2-- 8 2-- 9 2--10 2--11 2--12 2--13 2--14 2--15 2--16 2--17 2--18
+## [56] 2--19 2--20 2--21 2--22 2--23 2--24 2--25 2--26 2--27 2--28 2--29
+## [67] 2--30 2--31 2--32 2--33 2--34 2--35 2--36 2--37 2--38 2--39 2--40
+## [78] 3-- 4 3-- 5 3-- 6 3-- 7 3-- 8 3-- 9 3--10 3--11 3--12 3--13 3--14
+## + ... omitted several edges</code></pre>
+<p> </p>
+<p>Or a tree graph:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tr &lt;-<span class="st"> </span><span class="kw">make_tree</span>(<span class="dv">40</span>, <span class="dt">children =</span> <span class="dv">3</span>, <span class="dt">mode =</span> <span class="st">&quot;undirected&quot;</span>)
+<span class="kw">plot</span>(tr, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>, <span class="dt">vertex.color =</span> <span class="st">&quot;plum&quot;</span>) </code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-8-1.png" width="672" />   You can also generate mathmatical models of networks in igraph. For example, a very simple model can be generated by using <em>sample_gnm()</em> to generate a graph of a specified number of nodes (n) and links (m). Links will be generated with the same constant probability.<br />
+ </p>
+<p>Erdos-Renyi random graph (Again, ‘n’ is number of nodes, ‘m’ is the number of edges).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">er &lt;-<span class="st"> </span><span class="kw">sample_gnm</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">m=</span><span class="dv">40</span>) 
+<span class="kw">plot</span>(er, <span class="dt">vertex.size=</span><span class="dv">5</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>, <span class="dt">vertex.color =</span> <span class="st">&quot;plum&quot;</span>) <span class="co"># vertex color &quot;plum&quot; :)</span></code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Barabasi-Albert scale-free graph (preferential attachment). This function builds a model with a simple stochastic algorithm where n = the number of nodes &amp; power= the power of the preferential attachment. The default is 1, which gives linear attachment. Try changing the value of <em>power =</em> to 2 and 3 and see what happens! (m = the number of edges to add in each step).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ba &lt;-<span class="st">  </span><span class="kw">sample_pa</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">power=</span><span class="dv">1</span>, <span class="dt">m=</span><span class="dv">1</span>,  <span class="dt">directed=</span>F)
+<span class="kw">plot</span>(ba, <span class="dt">vertex.size=</span><span class="dv">6</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>, <span class="dt">vertex.color =</span> <span class="st">&quot;plum&quot;</span>)</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+</div>
+<div id="network-data-types" class="section level2">
+<h2>Network data types</h2>
+<div id="adjacency-matrices" class="section level3">
+<h3>Adjacency matrices</h3>
+<p>  You can read in your data directly as an adjacency matrix, but likely this is not the way that you have your data organized. Instead, it might be easier to have two files: a <em>node</em> file and an <em>edge</em> file.</p>
+<p>In a node file, the first two columns are all of your from:to links. Column 1 is always <em>from</em>, Column 2 is always <em>to</em> (less important for undirected networks). The columns after that are your edge attributes (such as weight of link, volume, probability, name etc).<br />
+ </p>
+<p>Here is an example of a simple node list, where all of the nodes are farmers. We include attributes about the <em>node</em> like age, gender and number of years farming.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Nodelist &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
+                    <span class="dt">Names =</span><span class="kw">c</span>(<span class="st">&quot;Jim&quot;</span>, <span class="st">&quot;Carole&quot;</span>, <span class="st">&quot;Joe&quot;</span>, <span class="st">&quot;Michelle&quot;</span>, <span class="st">&quot;Jen&quot;</span>, <span class="st">&quot;Pete&quot;</span>, <span class="st">&quot;Paul&quot;</span>, <span class="st">&quot;Tim&quot;</span>, 
+                            <span class="st">&quot;Jess&quot;</span>, <span class="st">&quot;Mark&quot;</span>, <span class="st">&quot;Jill&quot;</span>, <span class="st">&quot;Cam&quot;</span>, <span class="st">&quot;Kate&quot;</span>) ,
+                    <span class="dt">YearsFarming =</span> <span class="kw">c</span>(<span class="fl">8.5</span>, <span class="fl">6.5</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">6</span>) , 
+                    <span class="dt">Age =</span> <span class="kw">c</span>(<span class="dv">22</span>, <span class="dv">31</span>, <span class="dv">25</span>, <span class="dv">21</span>, <span class="dv">22</span>, <span class="dv">35</span>, <span class="dv">42</span>, <span class="dv">27</span>, <span class="dv">26</span>, <span class="dv">33</span>, <span class="dv">26</span>, <span class="dv">28</span>, <span class="dv">22</span>) , 
+                    <span class="dt">Gender =</span> <span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))
+Nodelist       </code></pre></div>
+<pre><code>##       Names YearsFarming Age Gender
+## 1       Jim          8.5  22   Male
+## 2    Carole          6.5  31 Female
+## 3       Joe          4.0  25   Male
+## 4  Michelle          1.0  21 Female
+## 5       Jen          3.0  22 Female
+## 6      Pete         10.0  35   Male
+## 7      Paul          5.0  42   Male
+## 8       Tim          5.0  27   Male
+## 9      Jess          5.0  26 Female
+## 10     Mark          1.0  33   Male
+## 11     Jill          1.0  26 Female
+## 12      Cam          6.0  28   Male
+## 13     Kate          6.0  22 Female</code></pre>
+<p> </p>
+<p>Now an edgelist- Who shared information in the 2017 growing season? How frequently?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Edgelist &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
+                  <span class="dt">From =</span> <span class="kw">c</span>(<span class="st">&quot;Jim&quot;</span>, <span class="st">&quot;Jim&quot;</span>, <span class="st">&quot;Jim&quot;</span>, <span class="st">&quot;Jill&quot;</span>, <span class="st">&quot;Kate&quot;</span>, <span class="st">&quot;Pete&quot;</span>, <span class="st">&quot;Pete&quot;</span>, <span class="st">&quot;Jess&quot;</span>, <span class="st">&quot;Jim&quot;</span>, <span class="st">&quot;Jim&quot;</span>, <span class="st">&quot;Pete&quot;</span>),
+                  <span class="dt">To =</span> <span class="kw">c</span>(<span class="st">&quot;Carole&quot;</span>, <span class="st">&quot;Jen&quot;</span>, <span class="st">&quot;Pete&quot;</span>, <span class="st">&quot;Carole&quot;</span>, <span class="st">&quot;Joe&quot;</span>, <span class="st">&quot;Carole&quot;</span>, <span class="st">&quot;Paul&quot;</span>, <span class="st">&quot;Mark&quot;</span>, <span class="st">&quot;Cam&quot;</span>, <span class="st">&quot;Mark&quot;</span>, <span class="st">&quot;Tim&quot;</span>)
+)</code></pre></div>
+</div>
+<div id="igraph-objects" class="section level3">
+<h3>igraph objects</h3>
+<p>Let’s make our farmer communication network!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">FarmNetwork &lt;-<span class="st"> </span><span class="kw">graph_from_data_frame</span>(<span class="dt">d =</span> Edgelist, <span class="dt">vertices =</span> Nodelist, <span class="dt">directed =</span> T)
+FarmNetwork</code></pre></div>
+<pre><code>## IGRAPH af41f19 DN-- 13 11 -- 
+## + attr: name (v/c), YearsFarming (v/n), Age (v/n), Gender (v/c)
+## + edges from af41f19 (vertex names):
+##  [1] Jim -&gt;Carole Jim -&gt;Jen    Jim -&gt;Pete   Jill-&gt;Carole Kate-&gt;Joe   
+##  [6] Pete-&gt;Carole Pete-&gt;Paul   Jess-&gt;Mark   Jim -&gt;Cam    Jim -&gt;Mark  
+## [11] Pete-&gt;Tim</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(FarmNetwork) <span class="co"># view edges</span></code></pre></div>
+<pre><code>## + 11/11 edges from af41f19 (vertex names):
+##  [1] Jim -&gt;Carole Jim -&gt;Jen    Jim -&gt;Pete   Jill-&gt;Carole Kate-&gt;Joe   
+##  [6] Pete-&gt;Carole Pete-&gt;Paul   Jess-&gt;Mark   Jim -&gt;Cam    Jim -&gt;Mark  
+## [11] Pete-&gt;Tim</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(FarmNetwork) <span class="co"># view nodes</span></code></pre></div>
+<pre><code>## + 13/13 vertices, named, from af41f19:
+##  [1] Jim      Carole   Joe      Michelle Jen      Pete     Paul    
+##  [8] Tim      Jess     Mark     Jill     Cam      Kate</code></pre>
+<p>Plot!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(FarmNetwork, <span class="dt">edge.arrow.size =</span> .<span class="dv">5</span>, <span class="dt">vertex.color =</span> <span class="st">&quot;plum&quot;</span>, <span class="dt">vertex.label.dist =</span> <span class="fl">2.5</span>)</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
+<div id="fancy-stuff" class="section level3">
+<h3>Fancy Stuff</h3>
+<p>Much more information about making beautiful networks in R using igraph can be found at <a href="http://kateto.net/networks-r-igraph">Katya Ognyanova’s Site</a>. But briefly:<br />
+  Let’s color our nodes based on gender</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">colrs &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;gray70&quot;</span>, <span class="st">&quot;blue&quot;</span>)
+<span class="kw">V</span>(FarmNetwork)<span class="op">$</span>color &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">V</span>(FarmNetwork)<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;Male&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>) ## if male, make orange, if not, blue. Go gators!!!!   
+<span class="kw">plot</span>(FarmNetwork, <span class="dt">edge.arrow.size =</span> .<span class="dv">5</span>, <span class="dt">vertex.label.dist =</span> <span class="fl">2.5</span>)</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>  You can also size your nodes based on attributes:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(FarmNetwork)<span class="op">$</span>size &lt;-<span class="st"> </span><span class="kw">V</span>(FarmNetwork)<span class="op">$</span>YearsFarming <span class="co"># size the nodes by number of years farming</span>
+<span class="kw">plot</span>(FarmNetwork, <span class="dt">edge.arrow.size =</span> .<span class="dv">5</span>, <span class="dt">vertex.label.dist =</span> <span class="fl">2.5</span>)</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>Scale the node size up a bit..</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(FarmNetwork)<span class="op">$</span>size &lt;-<span class="st"> </span><span class="kw">V</span>(FarmNetwork)<span class="op">$</span>YearsFarming <span class="op">*</span><span class="dv">2</span> ## scale by multiplying by 2
+<span class="kw">plot</span>(FarmNetwork, <span class="dt">edge.arrow.size =</span> .<span class="dv">5</span>, <span class="dt">vertex.label.dist =</span> <span class="fl">2.5</span>)</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+</div>
+</div>
+<div id="describing-networks" class="section level2">
+<h2>Describing networks</h2>
+<p> </p>
+<div id="node-level-statistics" class="section level3">
+<h3>Node-Level Statistics</h3>
+<ul>
+<li><strong>Degree centrality</strong>- The number of links a node has to other nodes in the network (both incoming and outgoing)<br />
+</li>
+<li><strong>Eigenvectory centrality</strong>- A weighted sum reflecting both direct links to a node (degree) and the node degree of neighbors<br />
+</li>
+<li><strong>Betweenness centrality</strong>- The number of shortest paths through the network of which a node is a part<br />
+</li>
+<li><strong>Closeness centrality</strong>- The inverse of the average length of the shortest path to/from all the other nodes in the network</li>
+</ul>
+<p>Use igraph “graph” function to plot a network directly as igraph object. We will use this as an example.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Net2 &lt;-<span class="st"> </span><span class="kw">graph</span>(<span class="dt">edges=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>, <span class="dv">3</span>,<span class="dv">2</span>, <span class="dv">2</span>,<span class="dv">1</span>, <span class="dv">2</span>,<span class="dv">4</span>, <span class="dv">5</span>,<span class="dv">4</span>), <span class="dt">n=</span><span class="dv">5</span>, <span class="dt">directed=</span>T) 
+Net2</code></pre></div>
+<pre><code>## IGRAPH 7e7c277 D--- 5 5 -- 
+## + edges from 7e7c277:
+## [1] 1-&gt;3 3-&gt;2 2-&gt;1 2-&gt;4 5-&gt;4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(Net2, <span class="dt">edge.arrow.size =</span> .<span class="dv">5</span>, <span class="dt">vertex.color =</span> <span class="st">&quot;gold&quot;</span>)</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div id="node-degree-centrality" class="section level4">
+<h4>Node degree centrality</h4>
+<p>What is the node <em>degree</em> of the nodes in our graph, which is the sum of the number of both incoming and outgoing links.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">deg1 &lt;-<span class="st">  </span><span class="kw">degree</span>(Net2, <span class="dt">v =</span> <span class="kw">V</span>(Net2), <span class="dt">mode =</span> <span class="kw">c</span>(<span class="st">&quot;all&quot;</span>))
+deg1 ## node degree of all nodes in the network </code></pre></div>
+<pre><code>## [1] 2 3 2 2 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(Net2)<span class="op">$</span>size &lt;-<span class="st"> </span>(deg1<span class="op">*</span><span class="dv">10</span>) <span class="co">#size the network nodes by their node degree </span>
+<span class="kw">plot</span>(Net2, <span class="dt">edge.arrow.size =</span> .<span class="dv">5</span>, <span class="dt">vertex.color =</span> <span class="st">&quot;gold&quot;</span>) ## is this what you expected?</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>  #### Node eigenvector centrality</p>
+<p><strong>Eigenvector centrality</strong>- Takes into account not only how many links that the node has, but also the number of links that connected nodes have. It is an extension of degree centrality. Note: this could potentially be important in epidemiology because disease risk may become higher if a node is connected to more highly connected nodes, even if the node itself does not have many links.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eig1 &lt;-<span class="st"> </span><span class="kw">eigen_centrality</span>(Net2, <span class="dt">directed =</span> <span class="ot">TRUE</span>)
+eig1 ## <span class="al">NOTE</span>: this gives a &quot;list&quot; of vectors. To pull the eigenvector centrality scores we need to look at </code></pre></div>
+<pre><code>## $vector
+## [1] 1 1 1 1 0
+## 
+## $value
+## [1] 1
+## 
+## $options
+## $options$bmat
+## [1] &quot;I&quot;
+## 
+## $options$n
+## [1] 5
+## 
+## $options$which
+## [1] &quot;LR&quot;
+## 
+## $options$nev
+## [1] 1
+## 
+## $options$tol
+## [1] 0
+## 
+## $options$ncv
+## [1] 0
+## 
+## $options$ldv
+## [1] 0
+## 
+## $options$ishift
+## [1] 1
+## 
+## $options$maxiter
+## [1] 1000
+## 
+## $options$nb
+## [1] 1
+## 
+## $options$mode
+## [1] 1
+## 
+## $options$start
+## [1] 1
+## 
+## $options$sigma
+## [1] 0
+## 
+## $options$sigmai
+## [1] 0
+## 
+## $options$info
+## [1] 0
+## 
+## $options$iter
+## [1] 12
+## 
+## $options$nconv
+## [1] 1
+## 
+## $options$numop
+## [1] 25
+## 
+## $options$numopb
+## [1] 0
+## 
+## $options$numreo
+## [1] 13</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eig1<span class="op">$</span>vector <span class="co">#like this!</span></code></pre></div>
+<pre><code>## [1] 1 1 1 1 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(Net2)<span class="op">$</span>size &lt;-<span class="st"> </span>(eig1<span class="op">$</span>vector<span class="op">*</span><span class="dv">10</span>) <span class="co">#size the network nodes by eigenvector centrality </span>
+<span class="kw">plot</span>(Net2, <span class="dt">edge.arrow.size =</span> .<span class="dv">5</span>, <span class="dt">vertex.color =</span> <span class="st">&quot;gold&quot;</span>) ## is this what you expected?</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+</div>
+<div id="node-betweenness-centrality" class="section level4">
+<h4>Node betweenness centrality</h4>
+<p>What is the <em>betweenness centrality</em> of the nodes in our graph, which is the number of shortest paths through the network of which a node is a part</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bet1 &lt;-<span class="st">  </span><span class="kw">betweenness</span>(Net2, <span class="dt">v =</span> <span class="kw">V</span>(Net2), <span class="dt">directed =</span> <span class="ot">TRUE</span>)
+bet1 ## node degree of all nodes in the network </code></pre></div>
+<pre><code>## [1] 1 3 2 0 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(Net2)<span class="op">$</span>size &lt;-<span class="st"> </span>(bet1<span class="op">*</span><span class="dv">10</span>) <span class="co">#size the network nodes by their node degree </span>
+<span class="kw">plot</span>(Net2, <span class="dt">edge.arrow.size =</span> .<span class="dv">5</span>, <span class="dt">vertex.color =</span> <span class="st">&quot;gold&quot;</span>) ## is this what you expected?</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+</div>
+<div id="node-closeness-centrality" class="section level4">
+<h4>Node closeness centrality</h4>
+<p>What is the <em>closeness centrality</em> of the nodes in our graph, The inverse of the average length of the shortest path to/from all the other nodes in the network. # <code>{r} # cls1 &lt;-  closeness(Net2, v = V(Net2), mode = &quot;all&quot;) # cls1 ## closeness centrality of all nodes in the network # V(Net2)$size &lt;- (cls1*100) #size the network nodes by their node closeness # plot(Net2, edge.arrow.size = .5, vertex.color = &quot;gold&quot;) ## is this what you expected? #</code> #  </p>
+</div>
+</div>
+<div id="graph-level-statistics" class="section level3">
+<h3>Graph level statistics</h3>
+<p>Calculate graph <strong>density</strong> (ratio of edges to number of possible edges), <strong>diameter</strong> (length of the longest path across the graph), <strong>mean distance</strong> (mean path length)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">igraph<span class="op">::</span><span class="kw">graph.density</span>(Net2) <span class="co">#graph density</span></code></pre></div>
+<pre><code>## [1] 0.25</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">diameter</span>(Net2) <span class="co"># diameter</span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean_distance</span>(Net2) ##mean path length</code></pre></div>
+<pre><code>## [1] 1.6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">igraph<span class="op">::</span><span class="kw">vertex_connectivity</span>(Net2)</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">igraph<span class="op">::</span><span class="kw">transitivity</span>(Net2)</code></pre></div>
+<pre><code>## [1] 0.5</code></pre>
+</div>
+</div>
+<div id="bonus-does-my-network-deviate-from-random" class="section level2">
+<h2>Bonus: Does my network deviate from random?</h2>
+<p>One way to see if my network has an structure to it that is different than what would be generated is to compare to many randomaly generated graphs of the same size (nodes and links).<br />
+ </p>
+<p>Lets go back to our farmer example!!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(igraph)
+<span class="kw">plot</span>(FarmNetwork)</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Degree_Distribution &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">degree</span>(FarmNetwork, <span class="dt">mode =</span> <span class="st">&quot;total&quot;</span>)
+<span class="kw">hist</span>(Degree_Distribution)</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-24-2.png" width="672" /></p>
+<p>same number of nodes and links</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new1 &lt;-<span class="st"> </span><span class="kw">sample_gnm</span>(<span class="dv">13</span>, <span class="dv">11</span>, <span class="dt">directed =</span> <span class="ot">FALSE</span>, <span class="dt">loops =</span> <span class="ot">FALSE</span>)
+h1&lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">degree</span>(new1)
+<span class="kw">hist</span>(h1)</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>Make a loop to generate 50 random graphs with that same number of nodes and links!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">degamat &lt;-<span class="st"> </span><span class="ot">NULL</span>
+n &lt;-<span class="st"> </span><span class="dv">50</span>
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){
+  newmatrix &lt;-<span class="st"> </span><span class="kw">sample_gnm</span>(<span class="dv">13</span>,<span class="dv">11</span>, <span class="dt">directed =</span> <span class="ot">FALSE</span>, <span class="dt">loops =</span> <span class="ot">FALSE</span>)
+  degmat &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">degree</span>(newmatrix)
+  degamat&lt;-<span class="kw">rbind</span>(degamat,degmat)
+}
+degamat</code></pre></div>
+<pre><code>##        [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+## degmat    0    2    2    1    2    3    5    0    1     1     1     1
+## degmat    0    2    2    0    2    2    1    4    1     3     2     0
+## degmat    2    0    4    4    3    1    0    1    1     0     3     3
+## degmat    0    3    1    1    3    2    2    2    2     1     2     2
+## degmat    0    2    2    2    3    3    2    0    1     1     3     2
+## degmat    1    2    0    1    1    3    2    2    4     1     1     3
+## degmat    1    0    3    2    2    3    1    1    1     2     3     1
+## degmat    0    2    4    2    1    4    0    2    1     0     2     2
+## degmat    0    1    2    1    3    0    2    0    3     3     1     3
+## degmat    2    2    1    2    0    2    1    3    0     4     2     1
+## degmat    3    0    1    3    3    2    3    3    0     0     0     1
+## degmat    1    2    0    2    2    3    3    2    2     2     1     1
+## degmat    1    4    1    0    2    2    1    1    3     2     3     1
+## degmat    3    2    3    1    2    2    3    2    0     2     0     0
+## degmat    3    2    2    0    1    1    2    1    2     3     2     2
+## degmat    1    2    2    0    2    1    2    2    2     3     1     3
+## degmat    1    3    4    2    2    3    3    0    1     0     1     1
+## degmat    2    1    1    4    2    1    1    3    1     1     1     1
+## degmat    3    1    1    2    1    1    3    1    1     1     1     3
+## degmat    2    2    3    2    1    1    4    1    0     1     1     2
+## degmat    2    1    2    1    2    1    1    4    0     3     3     1
+## degmat    2    1    1    2    0    1    4    0    2     2     2     1
+## degmat    1    3    2    1    0    0    3    2    1     3     2     2
+## degmat    0    1    1    3    0    0    7    2    2     1     1     1
+## degmat    2    3    3    1    1    0    2    1    3     2     1     2
+## degmat    2    6    2    3    1    2    1    2    0     1     1     1
+## degmat    1    1    3    2    2    2    1    1    1     1     3     2
+## degmat    0    2    2    3    1    1    2    2    2     0     3     2
+## degmat    3    1    1    1    2    2    1    2    1     1     3     3
+## degmat    2    1    1    2    0    0    3    0    4     1     5     2
+## degmat    1    2    2    1    0    2    5    3    0     2     3     1
+## degmat    0    4    1    4    1    3    0    0    1     0     2     1
+## degmat    2    1    4    1    3    2    1    1    1     0     2     1
+## degmat    2    3    1    2    3    3    1    0    0     1     3     2
+## degmat    1    2    1    3    1    1    3    1    2     0     3     2
+## degmat    2    3    2    0    1    1    3    2    3     1     0     1
+## degmat    3    3    4    2    1    1    0    2    1     2     1     1
+## degmat    1    3    2    1    2    1    1    2    3     1     3     2
+## degmat    2    2    1    2    3    0    2    4    0     1     2     1
+## degmat    3    0    1    2    1    3    0    1    2     3     0     2
+## degmat    2    2    0    3    1    2    2    1    2     4     2     0
+## degmat    3    1    1    1    2    3    1    1    1     3     3     1
+## degmat    4    0    0    2    1    2    2    1    1     2     3     1
+## degmat    1    3    3    1    1    1    2    2    1     1     1     4
+## degmat    2    3    1    1    4    2    4    2    0     0     0     1
+## degmat    1    1    1    3    2    4    0    1    2     1     2     2
+## degmat    3    4    0    2    0    2    2    2    1     1     3     1
+## degmat    0    1    3    2    0    2    0    3    2     1     3     3
+## degmat    1    2    3    3    1    0    0    2    3     3     1     2
+## degmat    3    1    1    2    2    3    1    1    2     1     0     2
+##        [,13]
+## degmat     3
+## degmat     3
+## degmat     0
+## degmat     1
+## degmat     1
+## degmat     1
+## degmat     2
+## degmat     2
+## degmat     3
+## degmat     2
+## degmat     3
+## degmat     1
+## degmat     1
+## degmat     2
+## degmat     1
+## degmat     1
+## degmat     1
+## degmat     3
+## degmat     3
+## degmat     2
+## degmat     1
+## degmat     4
+## degmat     2
+## degmat     3
+## degmat     1
+## degmat     0
+## degmat     2
+## degmat     2
+## degmat     1
+## degmat     1
+## degmat     0
+## degmat     5
+## degmat     3
+## degmat     1
+## degmat     2
+## degmat     3
+## degmat     1
+## degmat     0
+## degmat     2
+## degmat     4
+## degmat     1
+## degmat     1
+## degmat     3
+## degmat     1
+## degmat     2
+## degmat     2
+## degmat     1
+## degmat     2
+## degmat     1
+## degmat     3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(degamat, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">7</span>), <span class="dt">breaks =</span> <span class="dv">7</span>)</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>Graph and compare the degree distribution of our surveyed graph with degree distribution of our random networks.<br />
+* How do they compare? * Do we think there are underlyng social processes that are driving link formation in this network? * What could they be? * You might say that a few people are hightly connected but most are more sparsley connected than we would expect by random.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>),
+    <span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))
+<span class="kw">hist</span>(Degree_Distribution, <span class="dt">xlab =</span> <span class="st">&quot;Node Degree&quot;</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">7</span>), <span class="dt">breaks =</span> <span class="dv">3</span>, <span class="dt">main =</span> <span class="st">&quot;Observed&quot;</span>)</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(degamat, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">7</span>), <span class="dt">breaks =</span> <span class="dv">7</span>, <span class="dt">xlab =</span> <span class="st">&quot;Node Degree&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Simulated&quot;</span>)</code></pre></div>
+<p><img src="Describing_Networks_files/figure-html/unnamed-chunk-27-2.png" width="672" /></p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
