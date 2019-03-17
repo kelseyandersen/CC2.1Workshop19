@@ -337,7 +337,7 @@ div.tocify {
 </div>
 
 
-<p>March 17, 2019</p>
+<p>March 18, 2019</p>
 <div id="slides-for-this-section-can-be-downloaded-here" class="section level4">
 <h4>Slides for this section can be downloaded here:</h4>
 <ul>
@@ -356,6 +356,9 @@ div.tocify {
 <pre><code>## [1] 6</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">8</span><span class="op">^</span><span class="dv">8</span></code></pre></div>
 <pre><code>## [1] 16777216</code></pre>
+</div>
+<div id="operators" class="section level3">
+<h3>Operators</h3>
 <p>To make programming simpler, we usually save values or sets of values that we want to use again as “objects”. We do this using the symbols “&lt;-” (called the “gets arrow”).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span>
 a</code></pre></div>
@@ -363,55 +366,22 @@ a</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">b &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span><span class="dv">2</span>
 b</code></pre></div>
 <pre><code>## [1] 6</code></pre>
-<p>Comparing values will return “True” or “False”</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span><span class="op">==</span><span class="dv">2</span> ## does equal 
-<span class="dv">2</span><span class="op">!=</span><span class="dv">2</span> ## does not equal</code></pre></div>
-<blockquote>
-<h4 id="note-r-is-case-sensitive-and-unforgiving">Note: R is case-sensitive and unforgiving!</h4>
-</blockquote>
 </div>
-<div id="getting-started" class="section level2">
-<h2>Getting Started</h2>
-<p>First, lets do some fun stuff! To get started, install the <em>package</em> “ggplot2”. Packages are toolboxes that include functions, data and code for specific tasks. Note, remove the “#” from before install.packages() to load for the first time. The “#” comments out any code so it will not be run.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages(&quot;ggplot2&quot;)</span>
-<span class="kw">library</span>(ggplot2)</code></pre></div>
-<blockquote>
-<h4 id="note-if-you-have-installed-an-r-package-once-on-your-computer-you-will-not-need-to-install-it-again.-you-will-need-to-load-the-library-at-the-begining-of-each-new-session-using-the-library-function">Note: if you have installed an R package once on your computer, you will not need to install it again. You will need to <em>load</em> the library at the begining of each new session using the library() function</h4>
-</blockquote>
-<!-- ## Getting Data Into R -->
-<!-- Now make sure to place your "StripeRust.csv" file in the working directory that we set, then load the data in using the "read.csv" *function*.  -->
-<!-- ```{r} -->
-<!-- RustData <- read.csv("StripeRust.csv", header = TRUE)  -->
-<!--   #Header = TRUE lets R know that we have headings in the first row of our data set.  -->
-<!-- head(RustData) ## check the first few rows of the dataset -->
-<!-- names(RustData) ## check the column headers -->
-<!-- ``` -->
-<!-- > #### Note: this data is disease severity ratings taken in a wheat stripe rust nursury over the course of two seasons. "DAI" = days after inoculation.  -->
-<!-- We can plot this data using ggplot2. Tell the graphing function to use the data "RustData" and then add a layer to the plot with the geom_point() function with severity on the y axis and time on the x axis. Color the points by the year that data was collected.  -->
-<!-- ```{r} -->
-<!-- ggplot(data = RustData) + -->
-<!--   geom_point(mapping = aes(x = DAI, y = Severity, color = Year)) -->
-<!-- ``` -->
-<!-- >#### Note: It looks like disease took longer to develop in year 2, and was less severe by day 100. -->
-<!-- If we switch from the function "geom_point" to "geom_line" we can plot lines and not points.   -->
-<!-- ```{r} -->
-<!-- ggplot(data = RustData) + -->
-<!--   geom_line(mapping = aes(x = DAI, y = Severity, color = Year)) -->
-<!-- ``` -->
-<!-- We can look at the graphs side-by-side using the facet_wrap() function.  -->
-<!-- ```{r} -->
-<!-- ggplot(data = RustData) + -->
-<!--   geom_point(mapping = aes(x = DAI, y = Severity)) + -->
-<!--   facet_wrap(~Year)  -->
-<!-- ``` -->
-<!-- > #### Note: be sure to include a "+" at the end of each line, until you want to close the command.    -->
-<!-- Finally, lets add a title!  -->
-<!-- ```{r} -->
-<!-- ggplot(data = RustData) + -->
-<!--   geom_point(mapping = aes(x = DAI, y = Severity, color = Year)) + -->
-<!--   facet_wrap(~Year) + -->
-<!--   labs(title = "Stripe Rust Severity Over Time") -->
-<!-- ``` -->
+<div id="relational-operators" class="section level2">
+<h2>Relational operators [ &lt;, &gt;, ==, &gt;=, &lt;=, !=]</h2>
+<p>Comparing values will return “True” or “False”</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span><span class="op">==</span><span class="dv">2</span> ## &quot;==&quot; means does equal 
+<span class="dv">2</span><span class="op">!=</span><span class="dv">2</span> ## &quot;!=&quot; means does not equal
+<span class="dv">2</span><span class="op">&gt;=</span><span class="dv">3</span> ## &quot;&gt;=&quot; means greater than or equal to
+
+<span class="co"># Create an object with values from 1 to 10</span>
+num10 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>)
+
+<span class="co"># Which elements are less than 5? </span>
+num5 &lt;-<span class="st"> </span>num10 <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>
+
+<span class="co"># Check the elements in num5, these are TRUE / FALSE</span>
+num5</code></pre></div>
 </div>
 <div id="vectors" class="section level2">
 <h2>Vectors</h2>
@@ -433,29 +403,90 @@ WithR</code></pre></div>
 <pre><code>## [1] 4.769231</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(WithR)</code></pre></div>
 <pre><code>## [1] 2.795945</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">median</span>(WithR)</code></pre></div>
+<pre><code>## [1] 5</code></pre>
 <p>And graph a histogram of this distribution!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(WithR, <span class="dt">xlab =</span> <span class="st">&quot;Self-Reported R Proficiency&quot;</span>)</code></pre></div>
-<p><img src="APS2018_Tidyverse_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="CC2.1_IntroToR_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div id="note-r-is-case-sensitive-and-unforgiving" class="section level4">
+<h4>Note: R is case-sensitive and unforgiving!</h4>
+</div>
+</div>
+<div id="getting-started" class="section level2">
+<h2>Getting Started</h2>
+<p>First, lets do some fun stuff! To get started, install the <em>package</em> “ggplot2”. Packages are toolboxes that include functions, data and code for specific tasks. Note, remove the “#” from before install.packages() to load for the first time. The “#” comments out any code so it will not be run.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages(&quot;ggplot2&quot;)</span>
+<span class="kw">library</span>(ggplot2)</code></pre></div>
+<blockquote>
+<h4 id="note-if-you-have-installed-an-r-package-once-on-your-computer-you-will-not-need-to-install-it-again.-you-will-need-to-load-the-library-at-the-begining-of-each-new-session-using-the-library-function">Note: if you have installed an R package once on your computer, you will not need to install it again. You will need to <em>load</em> the library at the begining of each new session using the library() function</h4>
+</blockquote>
+</div>
+<div id="getting-data-into-r" class="section level2">
+<h2>Getting Data Into R</h2>
+<p>Now make sure to place your “StripeRust.csv” file in the working directory that we set, then load the data in using the “read.csv” <em>function</em>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RustData &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;StripeRust.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
+  <span class="co">#Header = TRUE lets R know that we have headings in the first row of our data set.</span>
+
+<span class="kw">head</span>(RustData) ## check the first few rows of the dataset</code></pre></div>
+<pre><code>##     Year DAI Severity
+## 1 Year 1  10        0
+## 2 Year 1  20        0
+## 3 Year 1  30        0
+## 4 Year 1  40        3
+## 5 Year 1  50       20
+## 6 Year 1  60       50</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(RustData) ## check the column headers</code></pre></div>
+<pre><code>## [1] &quot;Year&quot;     &quot;DAI&quot;      &quot;Severity&quot;</code></pre>
+<blockquote>
+<h4 id="note-this-data-is-disease-severity-ratings-taken-in-a-wheat-stripe-rust-nursury-over-the-course-of-two-seasons.-dai-days-after-inoculation.">Note: this data is disease severity ratings taken in a wheat stripe rust nursury over the course of two seasons. “DAI” = days after inoculation.</h4>
+</blockquote>
+<p>We can plot this data using ggplot2 (we will learn more about this later!). Tell the graphing function to use the data “RustData” that we called above, and then add a layer to the plot with the geom_point() function with severity on the y axis and year on the x axis. Color the points by the year that data was collected.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> RustData) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> DAI, <span class="dt">y =</span> Severity, <span class="dt">color =</span> Year))</code></pre></div>
+<p><img src="CC2.1_IntroToR_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<blockquote>
+<h4 id="note-it-looks-like-disease-took-longer-to-develop-in-year-2-and-was-less-severe-by-day-100.">Note: It looks like disease took longer to develop in year 2, and was less severe by day 100.</h4>
+</blockquote>
+<p>If we switch from the function “geom_point” to “geom_line” we can plot lines and not points.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> RustData) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> DAI, <span class="dt">y =</span> Severity, <span class="dt">color =</span> Year))</code></pre></div>
+<p><img src="CC2.1_IntroToR_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>We can look at the graphs side-by-side using the facet_wrap() function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> RustData) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> DAI, <span class="dt">y =</span> Severity)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Year)</code></pre></div>
+<p><img src="CC2.1_IntroToR_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<blockquote>
+<h4 id="note-be-sure-to-include-a-at-the-end-of-each-line-until-you-want-to-close-the-command.">Note: be sure to include a “+” at the end of each line, until you want to close the command.</h4>
+</blockquote>
+<p>Finally, lets add a title!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> RustData) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> DAI, <span class="dt">y =</span> Severity, <span class="dt">color =</span> Year)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Year) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Stripe Rust Severity Over Time&quot;</span>)</code></pre></div>
+<p><img src="CC2.1_IntroToR_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="tidyverse" class="section level1">
+<h1>Tidyverse</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load the library</span>
 <span class="kw">library</span>(tidyverse)</code></pre></div>
-<pre><code>## ── Attaching packages ───────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ── Attaching packages ──────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ tibble  2.0.1     ✔ purrr   0.2.5
 ## ✔ tidyr   0.8.1     ✔ dplyr   0.7.8
 ## ✔ readr   1.1.1     ✔ stringr 1.3.1
 ## ✔ tibble  2.0.1     ✔ forcats 0.3.0</code></pre>
 <pre><code>## Warning: package &#39;tibble&#39; was built under R version 3.5.2</code></pre>
-<pre><code>## ── Conflicts ──────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ─────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-</div>
 <div id="dataset" class="section level2">
 <h2>Dataset</h2>
-<p>In this module we will be using Iris flower dataset to learn the tools for data wrangling by using <code>dplyr</code> package. Similarly, we will use Iris dataset for exploring some of the basic plots using <code>ggplot2</code>. Both of these packages are the part of <code>tidyverse</code> package. So, if you have <code>tidyverse</code> loaded in your machine then you are ready to go !!!!!</p>
-<p>Iris data comes with the base R i.e., is build-in dataset. Let’s load the data first. You can do that by using data function and need to specify the name of dataset within parentheses- as shown below.</p>
+<p>In this module we will be using Iris flower dataset to learn the tools for data wrangling by using <code>dplyr</code> package. Similarly, we will use Iris dataset for exploring some of the basic plots using <code>ggplot2</code>. Both of these packages are the part of <code>tidyverse</code> package. So, if you have <code>tidyverse</code> loaded then you are ready to go!</p>
+<p>Iris data comes with base R i.e., it is a build-in dataset. Let’s load the data first. You can do that by using data function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load data</span>
 <span class="kw">data</span>(iris)
 
-<span class="co"># provide you the first 6 rows of the data</span>
+<span class="co"># check the first 6 rows of the data</span>
 <span class="kw">head</span>(iris)</code></pre></div>
 <pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ## 1          5.1         3.5          1.4         0.2  setosa
@@ -472,10 +503,12 @@ WithR</code></pre></div>
 ##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
 ##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
 ##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
-<p>If you have used other programming language before, then I bet you have heard about data frame. In tidyverse world data frame or table is called tibble. You can conceptualize it as table with some extra information on the data type.</p>
+<p>When you read in your data it is typically in the form of a data frame. In the tidyverse world a data frame is called a tibble. You can conceptualize it as table with some extra information on the data types.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create tibble format table</span>
-df &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(iris) 
-df</code></pre></div>
+df &lt;-<span class="st"> </span><span class="kw">as.tibble</span>(iris)</code></pre></div>
+<pre><code>## Warning: `as.tibble()` is deprecated, use `as_tibble()` (but mind the new semantics).
+## This warning is displayed once per session.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df</code></pre></div>
 <pre><code>## # A tibble: 150 x 5
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
@@ -490,12 +523,12 @@ df</code></pre></div>
 ##  9          4.4         2.9          1.4         0.2 setosa 
 ## 10          4.9         3.1          1.5         0.1 setosa 
 ## # … with 140 more rows</code></pre>
-<p>If you check at the header of tibble, then you can see it contains information on the class of data contained within the column. For example, information in the Species column of Iris data is factor.</p>
-<p>Now lets dive into dplr little more, and work on data wrangling part. Data cleaning or organizing is extremely essential for downstream analysis. Most of the data analyst spend most of their time in data cleaning, although, most of us hate to spend time on cleaning the messy data. Luckily, <code>dplyr</code> has quite intuitive functions to help you..</p>
-<p>Let say if you want to filter the Iris dataset, where Species are versicolor. Then you can use a function filter.</p>
+<p>If you check the header of this tibble, then you can see it contains information on the class of data contained within the column. For example, information in the Species column of Iris data is factor.</p>
+<p>Now lets dive into the package <code>dplyr</code> a little more, and work on data wrangling part. We all have data that is in one format that we need to have in another format to use for our analysis. Data cleaning or organizing is essential for downstream analysis. Luckily, <code>dplyr</code> has intuitive functions to help you..</p>
+<p>Let say if you want to filter the Iris dataset, where Species are versicolor. Then you can use the function filter().</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Filter rows with filter()</span>
 <span class="co"># here df is the object where we had store our tibble data</span>
-<span class="co"># yes, you need to use ==</span>
+<span class="co"># yes, you need to use double equals (==)</span>
 <span class="kw">filter</span>(df, Species <span class="op">==</span><span class="st"> &quot;versicolor&quot;</span>)</code></pre></div>
 <pre><code>## # A tibble: 50 x 5
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species   
@@ -511,7 +544,7 @@ df</code></pre></div>
 ##  9          6.6         2.9          4.6         1.3 versicolor
 ## 10          5.2         2.7          3.9         1.4 versicolor
 ## # … with 40 more rows</code></pre>
-<p>You can also filter dataset passing some conditional requirements. Here, let’s say, we want to select all flower data with petal length is greater than 2.</p>
+<p>You can also filter your dataset with conditional requirements. Here, let’s say, we want to select all flower data with petal length that is greater than 2.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Comparisons</span>
 <span class="kw">filter</span>(df, Petal.Length <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>)</code></pre></div>
 <pre><code>## # A tibble: 100 x 5
@@ -528,7 +561,7 @@ df</code></pre></div>
 ##  9          6.6         2.9          4.6         1.3 versicolor
 ## 10          5.2         2.7          3.9         1.4 versicolor
 ## # … with 90 more rows</code></pre>
-<p>Since you have used one condition, why not multiple?</p>
+<p>You can also filter based on multiple conditions.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Logical operators</span>
 <span class="kw">filter</span>(df, Petal.Length <span class="op">&gt;</span><span class="st"> </span><span class="dv">6</span> <span class="op">&amp;</span><span class="st"> </span>Sepal.Length <span class="op">&gt;</span><span class="st"> </span><span class="dv">7</span>)</code></pre></div>
 <pre><code>## # A tibble: 9 x 5
@@ -543,7 +576,7 @@ df</code></pre></div>
 ## 7          7.4         2.8          6.1         1.9 virginica
 ## 8          7.9         3.8          6.4         2   virginica
 ## 9          7.7         3            6.1         2.3 virginica</code></pre>
-<p>Dataset is filtered based on both the criteria, and only the entries that matched the set conditions are displayed.</p>
+<p>Dataset is filtered based on both the criteria, and only the entries that match the set conditions are displayed.</p>
 <p>Now, rather than filtering data with the desired criteria, we can also arrange them in our desired order- by using arrange function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># arrange by sepal length then petal width. Default is ascending order. </span>
 <span class="kw">arrange</span>(df, Sepal.Length, Petal.Width)</code></pre></div>
@@ -561,7 +594,7 @@ df</code></pre></div>
 ##  9          4.6         3.4          1.4         0.3 setosa 
 ## 10          4.7         3.2          1.3         0.2 setosa 
 ## # … with 140 more rows</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># allows to arrange in descending order. </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># allows to arrange in descending order if we add desc() in front of the column name that we want to sort by</span>
 <span class="kw">arrange</span>(df, <span class="kw">desc</span>(Sepal.Length))</code></pre></div>
 <pre><code>## # A tibble: 150 x 5
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species  
@@ -577,7 +610,7 @@ df</code></pre></div>
 ##  9          7.2         3.6          6.1         2.5 virginica
 ## 10          7.2         3.2          6           1.8 virginica
 ## # … with 140 more rows</code></pre>
-<p>Unlike filter, if you want to take a subset of data, and study them separately then you can use select function to get a subset of the bigger data.</p>
+<p>Unlike filter, if you want to take a subset of data, and study them separately then you can use <em>select()</em> function to get a subset of data columns.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># from iris data, lets select only three columns - Species, Petal width and Petal length</span>
 <span class="kw">select</span>(df, Species, Petal.Width, Petal.Length)</code></pre></div>
 <pre><code>## # A tibble: 150 x 3
@@ -594,7 +627,7 @@ df</code></pre></div>
 ##  9 setosa          0.2          1.4
 ## 10 setosa          0.1          1.5
 ## # … with 140 more rows</code></pre>
-<p>R is quiet flexible in handling data set. You can not only twist and turn the entries, but also add additional columns and rows. You can use mutate function to do that. Here log.Sepal.length is a name of the new column, and in this column we will be storing the log(Sepal.Length) values.</p>
+<p>There may be times when you want to add an aditional, calculated column to your data. Here log.Sepal.length is a name of a new column, and in this column we will be storing the log(Sepal.Length) values.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutate</span>(df, <span class="dt">log.Sepal.length =</span> <span class="kw">log</span>(Sepal.Length))</code></pre></div>
 <pre><code>## # A tibble: 150 x 6
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
@@ -610,7 +643,7 @@ df</code></pre></div>
 ##  9          4.4         2.9          1.4         0.2 setosa 
 ## 10          4.9         3.1          1.5         0.1 setosa 
 ## # … with 140 more rows, and 1 more variable: log.Sepal.length &lt;dbl&gt;</code></pre>
-<p>Other important function in <code>dplyr</code> is summarise. This function allows you get the summary information about the data. In the example below, we first group entries by flower species, then calculate mean petal length for each species of flower.</p>
+<p>Another important function in <code>dplyr</code> is <em>summarise()</em>. This function allows you get summary information about the data. In the example below, we first group entries by flower species, then calculate mean petal length for each species of flower.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find mean of peteal length</span>
 <span class="kw">summarise</span>(df, <span class="kw">mean</span>(Petal.Length))</code></pre></div>
 <pre><code>## # A tibble: 1 x 1
@@ -636,8 +669,8 @@ df</code></pre></div>
 ## 1 setosa                     1.46
 ## 2 versicolor                 4.26
 ## 3 virginica                  5.55</code></pre>
-<p>Did you notice %&gt;% symbol? What is that? This symbol is called pipe. Yes… pipe because as name imply, it takes in output from one operation then pass/pipe it as an input for next operation. Advantage: No need to create new object to store values at each operation.</p>
-<p>Now you know how to organize or clean data, which mean you have become a “Data Scientist”. Data science will be incomplete without good visualization tools. So, now we will explore some of the very basic plots using ggplot2 package. It’s fun to see figures then tibble.</p>
+<p>Did you notice %&gt;% symbol? What is that? This symbol is called pipe. Yes… pipe because as the name implies, it takes in output from one operation then pass/pipe it as an input for next operation. Advantage: No need to create new object to store values at each operation.</p>
+<p>Now you know how to organize or clean data, which means you have become a “Data Scientist”. Data science would be incomplete without good visualization tools. So, now we will explore some of the very basic plots using ggplot2 package.</p>
 <p>Since you know so much about Iris flower data, we will use the same one for learning visualizations. However, you can use the same concepts while analyzing your own data.</p>
 <p>Let’s see the figure first!!!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#1 Scatter PLot</span>
@@ -646,14 +679,14 @@ df</code></pre></div>
 <span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Sepal Length&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Sepal Width&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Sepal Length-Width&quot;</span>)</code></pre></div>
-<p><img src="APS2018_Tidyverse_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="CC2.1_IntroToR_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 <p>The plot that you just plotted is called scatter plot. Let’s follow the code briefly. If you understand this code, then the rest of code for visualization is based on similar concept.</p>
 <p>Here, in data you are specifying df, which is our tibble format Iris data. Then, with aes we are specifying what we want in X- and Y-axes. Sepal length is used as X-axis, and Sepal width as Y-axis.</p>
 <p>So far, we have informed R the backbone of our plot.</p>
-<p>geom is used to specify what kind of plot that we want. For scatter plot we want geom_point. If we want bar plot, then geom_bar, and there are many other options.</p>
+<p>geom() is used to specify what kind of plot that we want. For scatter plot we want geom_point(). If we want bar plot, then geom_bar, and there are many other options.</p>
 <p>With-in geom_point we are adding more information for the points. We want each point to be colored and shaped according to the flower species.</p>
 <p><code>+</code> is used to add each layer of information.</p>
-<p>The other handy plot is box plot- can be used to look the spread of data. For the code part, the logic is same as of scatter plot, but this time we need to use geom_boxplot.</p>
+<p>The other handy plot is box plot- this can be used to look the spread of data. For the code part, the logic is same as of scatter plot, but this time we need to use geom_boxplot.</p>
 <p>Additionally, we can use <code>+</code> sign and add some summary statistics within the plot. Here, we want to display mean for each flower species within the boxplot. You can modify the shape and size parameters.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 2) Box Plot</span>
 
@@ -664,7 +697,7 @@ box <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Sepal Length&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Iris Boxplot&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y=</span>mean, <span class="dt">geom=</span><span class="st">&quot;point&quot;</span>, <span class="dt">shape=</span><span class="dv">5</span>, <span class="dt">size=</span><span class="dv">4</span>)</code></pre></div>
-<p><img src="APS2018_Tidyverse_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="CC2.1_IntroToR_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 <p>Histograms allow to look the data distribution. Histograms are commonly used in exploratory analysis. You can also modify the bin size and check for irregular trends (outliers) in the data - on your own.</p>
 <p>Note- we need to change geom type— here we use geom_histogram</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 3) Histogram</span>
@@ -675,7 +708,7 @@ histogram <span class="op">+</span>
 <span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Sepal Width&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Histogram of Sepal Width&quot;</span>)</code></pre></div>
-<p><img src="APS2018_Tidyverse_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="CC2.1_IntroToR_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 <p>Barplot– we don;t even have to mention about it. You have seen it, and use it. Let’s plot in ggplot2. Again, we need to specify geom type- as geom_bar</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 4) bar plot</span>
 bar &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span>df, <span class="kw">aes</span>(<span class="dt">x=</span>Species))
@@ -684,7 +717,7 @@ bar <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">fill=</span>Species)) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Species&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Count&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Bar plot of Sepal Length&quot;</span>) </code></pre></div>
-<p><img src="APS2018_Tidyverse_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="CC2.1_IntroToR_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <p>Additionally, another interesting and handy plotting tool is facet. Facet allows to get a separate panel for each category. As you can see in the plot below, we get three panels - one for each species of flower.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 5) Faceting</span>
 facet &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span>df, <span class="kw">aes</span>(Sepal.Length, <span class="dt">y=</span>Sepal.Width, <span class="dt">color=</span>Species)) <span class="op">+</span>
@@ -694,7 +727,8 @@ facet &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Faceting&quot;</span>) </code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Along columns</span>
 facet <span class="op">+</span><span class="st"> </span><span class="kw">facet_grid</span>(. <span class="op">~</span><span class="st"> </span>Species)</code></pre></div>
-<p><img src="APS2018_Tidyverse_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p><img src="CC2.1_IntroToR_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+</div>
 </div>
 
 

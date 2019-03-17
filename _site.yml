@@ -10,7 +10,7 @@ navbar:
   - text: Introduction to R
     menu:
     - text: Introduction to R
-      href: APS2018_Tidyverse.html
+      href: CC2.1_IntroToR.html
   - text: Networks in R
     menu:
     - text: Networks in R

@@ -1,0 +1,356 @@
+---
+title: "Introduction to tidyverse"
+author: "Kelsey Andersen & Ravin Poudel"
+---
+`r as.character(format(Sys.Date(), format="%B %d, %Y"))`
+
+
+#### Slides for this section can be downloaded here:  
+ 
+* [Intro to R](PDFFiles/ICPP2018_IntroR.pdf)
+* [Intro to Tidyverse](PDFFiles/ICPP2018_tidyverse.pdf)
+
+#### Use R Studio to set working directory by navigating to Session > Set Working Directory > "Choose Directory"
+
+### You can use R as a simple calculator:
+```{r calculator}
+1+1
+3*2
+8^8
+```
+
+
+### Operators
+
+To make programming simpler, we usually save values or sets of values that we want to use again as "objects". We do this using the symbols "<-" (called the "gets arrow"). 
+```{r}
+a <- 2 + 2
+a
+b <- a + 2
+b
+```
+
+
+## Relational operators [ <, >, ==, >=, <=, !=]
+
+Comparing values will return "True" or "False"
+```{r,results='hide'}
+2==2 ## "==" means does equal 
+2!=2 ## "!=" means does not equal
+2>=3 ## ">=" means greater than or equal to
+
+# Create an object with values from 1 to 10
+num10 <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+# Which elements are less than 5? 
+num5 <- num10 < 5
+
+# Check the elements in num5, these are TRUE / FALSE
+num5
+```
+
+
+## Vectors
+
+> ####Vectors are a way to set a series of data elements as an object. 
+
+```{r}
+v1 <- c(1, 2, 3, 4, 5) #numbers
+v2 <- c("hello", "world") #characters 
+v3 <- c("TRUE", "FALSE", "TRUE") #logical values (also could be - "T", "F", "T")
+```
+
+
+Lets make a vector with hypothetical ratings of "R expertise" on a scale of 1-10.  
+```{r}
+WithR <- c(8.5, 6.5, 4, 1, 3, 10, 5, 5, 5, 1, 1, 6, 6)
+WithR
+```
+
+We can use the following functions to look at some summary statistics. 
+```{r}
+summary(WithR)
+mean(WithR)
+sd(WithR)
+median(WithR)
+```
+
+And graph a histogram of this distribution!
+```{r}
+hist(WithR, xlab = "Self-Reported R Proficiency")
+```
+
+
+#### Note: R is case-sensitive and unforgiving! 
+
+
+##Getting Started 
+First, lets do some fun stuff! To get started, install the *package* "ggplot2". Packages are toolboxes that include functions, data and code for specific tasks. Note, remove the "#" from before install.packages() to load for the first time. The "#" comments out any code so it will not be run.
+
+```{r}
+#install.packages("ggplot2")
+library(ggplot2)
+```
+
+> #### Note: if you have installed an R package once on your computer, you will not need to install it again. You will need to *load* the library at the begining of each new session using the library() function
+
+
+
+
+## Getting Data Into R 
+
+Now make sure to place your "StripeRust.csv" file in the working directory that we set, then load the data in using the "read.csv" *function*.
+```{r}
+RustData <- read.csv("StripeRust.csv", header = TRUE)
+  #Header = TRUE lets R know that we have headings in the first row of our data set.
+
+head(RustData) ## check the first few rows of the dataset
+names(RustData) ## check the column headers
+```
+
+
+> #### Note: this data is disease severity ratings taken in a wheat stripe rust nursury over the course of two seasons. "DAI" = days after inoculation.
+
+
+We can plot this data using ggplot2 (we will learn more about this later!). Tell the graphing function to use the data "RustData" that we called above, and then add a layer to the plot with the geom_point() function with severity on the y axis and year on the x axis. Color the points by the year that data was collected.
+```{r}
+ggplot(data = RustData) +
+  geom_point(mapping = aes(x = DAI, y = Severity, color = Year))
+```
+
+>#### Note: It looks like disease took longer to develop in year 2, and was less severe by day 100.
+
+
+If we switch from the function "geom_point" to "geom_line" we can plot lines and not points.
+```{r}
+ggplot(data = RustData) +
+  geom_line(mapping = aes(x = DAI, y = Severity, color = Year))
+```
+
+We can look at the graphs side-by-side using the facet_wrap() function.
+```{r}
+ggplot(data = RustData) +
+  geom_point(mapping = aes(x = DAI, y = Severity)) +
+  facet_wrap(~Year)
+```
+
+> #### Note: be sure to include a "+" at the end of each line, until you want to close the command.
+
+Finally, lets add a title!
+```{r}
+ggplot(data = RustData) +
+  geom_point(mapping = aes(x = DAI, y = Severity, color = Year)) +
+  facet_wrap(~Year) +
+  labs(title = "Stripe Rust Severity Over Time")
+```
+
+
+# Tidyverse
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo= TRUE, include=TRUE}
+# load the library
+library(tidyverse)
+```
+
+## Dataset 
+In this module we will be using Iris flower dataset to learn the tools for 
+data wrangling by using `dplyr` package. Similarly, we will use Iris dataset for exploring some of the basic plots using `ggplot2`. Both of these packages are the part of `tidyverse` package. So, if you have `tidyverse` loaded then you are ready to go!
+
+Iris data comes with base R i.e., it is a build-in dataset. Let's load the data first. You can do that by using data function.
+
+```{r, echo= TRUE, include=TRUE}
+# load data
+data(iris)
+
+# check the first 6 rows of the data
+head(iris)
+
+# check the structure of data. Very handy function to get a basic information about the data.
+str(iris)
+```
+
+
+When you read in your data it is typically in the form of a data frame. In the tidyverse world a data frame is called a tibble. You can conceptualize it as table with some extra information on the data types.
+
+```{r, echo= TRUE, include=TRUE}
+# create tibble format table
+df <- as.tibble(iris)
+df
+```
+
+If you check the header of this tibble, then you can see it contains information on the class of data contained within the column. For example, information in the Species column of Iris data is factor.
+
+Now lets dive into the package `dplyr` a little more, and work on data wrangling part. We all have data that is in one format that we need to have in another format to use for our analysis. Data cleaning or organizing is essential for downstream analysis. Luckily, `dplyr` has intuitive functions to help you..
+
+Let say if you want to filter the Iris dataset, where Species are versicolor. Then you can use the function filter().
+
+```{r, echo= TRUE, include=TRUE}
+# Filter rows with filter()
+# here df is the object where we had store our tibble data
+# yes, you need to use double equals (==)
+filter(df, Species == "versicolor")
+```
+
+You can also filter your dataset with conditional requirements. Here, let's say, we want to select all flower data with petal length that is greater than 2. 
+
+```{r, echo= TRUE, include=TRUE}
+# Comparisons
+filter(df, Petal.Length > 2)
+```
+
+You can also filter based on multiple conditions. 
+
+```{r, echo= TRUE, include=TRUE}
+# Logical operators
+filter(df, Petal.Length > 6 & Sepal.Length > 7)
+```
+Dataset is filtered based on both the criteria, and only the entries that match the set conditions are displayed. 
+
+Now, rather than filtering data with the desired criteria, we can also arrange them in our desired order- by using arrange function. 
+
+```{r, echo= TRUE, include=TRUE}
+# arrange by sepal length then petal width. Default is ascending order. 
+arrange(df, Sepal.Length, Petal.Width)
+
+# allows to arrange in descending order if we add desc() in front of the column name that we want to sort by
+arrange(df, desc(Sepal.Length))
+```
+
+
+Unlike filter, if you want to take a subset of data, and study them separately then you can use *select()* function to get a subset of data columns. 
+
+```{r, echo= TRUE, include=TRUE}
+# from iris data, lets select only three columns - Species, Petal width and Petal length
+select(df, Species, Petal.Width, Petal.Length)
+```
+
+
+There may be times when you want to add an aditional, calculated column to your data. Here log.Sepal.length is a name of a new column, and in this column we will be storing the log(Sepal.Length) values. 
+
+```{r, echo= TRUE, include=TRUE}
+mutate(df, log.Sepal.length = log(Sepal.Length))
+```
+
+Another important function in `dplyr` is *summarise()*. This function allows you get summary information about the data. In the example below, we first group entries by flower species, then calculate mean petal length for each species of flower. 
+
+```{r, echo= TRUE, include=TRUE}
+# find mean of peteal length
+summarise(df, mean(Petal.Length))
+
+# find mean of petal length for each species
+
+group_by(df, Species) %>% count(n())
+```
+
+```{r, echo= TRUE, include=TRUE}
+df %>% 
+  group_by(Species) %>%
+  summarise(mean(Petal.Length))
+```
+
+Did you notice %>% symbol? What is that? 
+  This symbol is called pipe. Yes... pipe because as the name implies, it takes in output from one operation then pass/pipe it as an input for next operation. Advantage: No need to create new object to store values at each operation. 
+
+
+Now you know how to organize or clean data, which means you have become a "Data Scientist". Data science would be incomplete without good visualization tools. So, now we will explore some of the very basic plots using ggplot2 package. 
+
+Since you know so much about Iris flower data, we will use the same one for learning visualizations. However, you can use the same concepts while analyzing your own data. 
+
+Let's see the figure first!!!
+
+```{r, echo= TRUE, include=TRUE}
+#1 Scatter PLot
+ggplot(data=df, aes(x = Sepal.Length, y = Sepal.Width))+
+  geom_point(aes(color=Species, shape=Species)) +
+  xlab("Sepal Length") +
+  ylab("Sepal Width") +
+  ggtitle("Sepal Length-Width")
+
+```
+
+
+
+The plot that you just plotted is called scatter plot. Let's follow the code briefly. If you understand this code, then the rest of code for visualization is based on similar concept. 
+
+Here, in data you are specifying df, which is our tibble format Iris data.
+Then, with aes we are specifying what we want in X- and Y-axes. Sepal length is used as X-axis, and Sepal width as Y-axis. 
+
+So far, we have informed R the backbone of our plot. 
+
+geom() is used to specify what kind of plot that we want. For scatter plot we want geom_point(). If we want bar plot, then geom_bar, and there are many other options. 
+
+With-in geom_point we are adding more information for the points. We want each point to be colored and shaped according to the flower species. 
+
+`+` is used to add each layer of information. 
+
+The other handy plot is box plot- this can be used to look the spread of data. 
+For the code part, the logic is same as of scatter plot, but this time we need to use geom_boxplot.
+
+Additionally, we can use `+` sign and add some summary statistics within the plot. Here, we want to display mean for each flower species within the boxplot. You can modify the shape and size parameters.  
+
+```{r, echo= TRUE, include=TRUE}
+# 2) Box Plot
+
+box <- ggplot(data=df, aes(x=Species, y=Sepal.Length))
+
+box + 
+  geom_boxplot(aes(fill=Species)) +
+  ylab("Sepal Length") +
+  ggtitle("Iris Boxplot") +
+  stat_summary(fun.y=mean, geom="point", shape=5, size=4)
+
+```
+
+
+Histograms allow to look the data distribution. Histograms are commonly used in exploratory analysis. You can also modify the bin size and check for irregular trends (outliers) in the data - on your own.
+
+Note- we need to change geom type--- here we use geom_histogram
+```{r, echo= TRUE, include=TRUE}
+# 3) Histogram
+histogram <- ggplot(data=df, aes(x=Sepal.Width))
+
+histogram +
+  geom_histogram(binwidth=0.2, color="black", aes(fill=Species)) +
+  xlab("Sepal Width") + 
+  ylab("Frequency") + 
+  ggtitle("Histogram of Sepal Width")
+```
+
+
+Barplot-- we don;t even have to mention about it. You have seen it, and use it. 
+Let's plot in ggplot2. Again, we need to specify geom type- as geom_bar
+```{r, echo= TRUE, include=TRUE}
+# 4) bar plot
+bar <- ggplot(data=df, aes(x=Species))
+
+bar +
+  geom_bar(aes(fill=Species)) + xlab("Species") + 
+  ylab("Count") +
+  ggtitle("Bar plot of Sepal Length") 
+```
+ 
+Additionally, another interesting and handy plotting tool is facet. Facet allows to get a separate panel for each category. As you can see in the plot below, we get three panels - one for each species of flower. 
+
+
+```{r, echo= TRUE, include=TRUE}
+
+# 5) Faceting
+facet <- ggplot(data=df, aes(Sepal.Length, y=Sepal.Width, color=Species)) +
+  geom_point(aes(shape=Species), size=1.5) +
+  xlab("Sepal Length") +
+  ylab("Sepal Width") +
+  ggtitle("Faceting") 
+
+```
+
+```{r, echo= TRUE, include=TRUE}
+# Along columns
+facet + facet_grid(. ~ Species)
+```
+

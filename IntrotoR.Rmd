@@ -1,14 +1,9 @@
 ---
 title: "Introduction to R"
 ---
+#### Use R Studio to set working directory by navigating to Session > Set Working Directory > "Choose Directory"
 
-### Set working directory
-
-First, set your working directory. This is a folder in which you will save this script, along with any files that will be used as part of your analyses. 
-
-
-
-### R is essentially a fancy calculator:
+### You can use R as a simple calculator:
 ```{r calculator}
 1+1
 3*2
