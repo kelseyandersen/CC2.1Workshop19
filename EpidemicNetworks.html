@@ -319,6 +319,31 @@ div.tocify {
     </li>
   </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    RTB Packages
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="seedHealth-v8 IITA workshop.Rmd">seedHealth</a>
+    </li>
+    <li class="dropdown-header">INA</li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Resources
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Resources.Rmd">Resources</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -343,30 +368,8 @@ div.tocify {
 <div id="matrices-in-r-epidemic-spread-over-time" class="section level2">
 <h2>Matrices in R: Epidemic spread over time</h2>
 <p>First, load the libraries that we will use in this module.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(igraph)</code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;igraph&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     decompose, spectrum</code></pre>
-<pre><code>## The following object is masked from &#39;package:base&#39;:
-## 
-##     union</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre></div>
-<pre><code>## ── Attaching packages ──────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.1.0     ✔ purrr   0.2.5
-## ✔ tibble  2.0.1     ✔ dplyr   0.7.8
-## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
-## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## Warning: package &#39;tibble&#39; was built under R version 3.5.2</code></pre>
-<pre><code>## ── Conflicts ─────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::as_data_frame() masks tibble::as_data_frame(), igraph::as_data_frame()
-## ✖ purrr::compose()       masks igraph::compose()
-## ✖ tidyr::crossing()      masks igraph::crossing()
-## ✖ dplyr::filter()        masks stats::filter()
-## ✖ dplyr::groups()        masks igraph::groups()
-## ✖ dplyr::lag()           masks stats::lag()
-## ✖ purrr::simplify()      masks igraph::simplify()</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(igraph)
+<span class="kw">library</span>(tidyverse)</code></pre></div>
 <p>Using the symbol ’*‘in R multiplies each element of a matrix by the corresponding element of another matrix. This is ’element-wise multiplication’, rather than matrix multiplication.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X1 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>,<span class="dt">ncol=</span><span class="dv">3</span>)
 X1</code></pre></div>
@@ -504,16 +507,16 @@ Amat &lt;-<span class="st"> </span>Amat<span class="op">*</span><span class="dv"
 <span class="kw">diag</span>(Amat) &lt;-<span class="st"> </span><span class="dv">1</span> <span class="co"># set the diagonals to 1 so that if a node is infected, it stays infected</span>
 Amat <span class="co"># our randomly generated matrix</span></code></pre></div>
 <pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
-##  [1,]    1    0    0    1    0    0    0    0    0     0
-##  [2,]    0    1    0    1    0    1    0    1    1     0
-##  [3,]    0    0    1    0    0    0    1    0    1     0
-##  [4,]    0    0    0    1    0    1    0    0    0     1
-##  [5,]    0    0    0    0    1    0    0    0    0     1
-##  [6,]    0    0    0    1    0    1    0    0    0     0
-##  [7,]    0    0    0    0    0    1    1    1    0     0
-##  [8,]    0    0    1    1    0    0    0    1    0     0
-##  [9,]    0    0    0    1    0    0    0    0    1     0
-## [10,]    0    1    0    1    1    0    1    0    0     1</code></pre>
+##  [1,]    1    0    0    0    0    1    0    0    0     0
+##  [2,]    0    1    0    0    1    0    0    0    0     0
+##  [3,]    0    0    1    0    0    0    0    1    0     1
+##  [4,]    0    1    1    1    1    0    0    1    0     0
+##  [5,]    1    0    0    0    1    1    1    0    1     0
+##  [6,]    0    0    0    0    0    1    0    0    0     0
+##  [7,]    0    0    0    0    0    0    1    0    0     0
+##  [8,]    0    0    0    1    0    0    1    1    0     1
+##  [9,]    1    1    1    1    0    0    0    0    1     0
+## [10,]    0    0    0    0    0    0    1    0    0     1</code></pre>
 <p> </p>
 <p>Plot to see you network</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Mat3 &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>(Amat)
@@ -529,7 +532,7 @@ df &lt;-<span class="st"> </span><span class="kw">cbind</span>(Time1,Time2)
 df</code></pre></div>
 <pre><code>##       Time1 Time2
 ##  [1,]     1     1
-##  [2,]     0     0
+##  [2,]     0     1
 ##  [3,]     0     1
 ##  [4,]     0     1
 ##  [5,]     0     0
@@ -537,7 +540,7 @@ df</code></pre></div>
 ##  [7,]     1     1
 ##  [8,]     1     1
 ##  [9,]     1     1
-## [10,]     0     0</code></pre>
+## [10,]     0     1</code></pre>
 </div>
 </div>
 <div id="case-study-sweetpotato-in-uganda" class="section level2">
@@ -599,9 +602,9 @@ fix.layout &lt;-<span class="st"> </span><span class="kw">layout_with_dh</span>(
 FullNet2 &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(FullNet)
 FullNet3 &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>(FullNet2)
 FullNet3</code></pre></div>
-<pre><code>## IGRAPH c4fd8ca DN-- 126 283 -- 
+<pre><code>## IGRAPH 383669c DN-- 126 283 -- 
 ## + attr: name (v/c)
-## + edges from c4fd8ca (vertex names):
+## + edges from 383669c (vertex names):
 ##  [1] S_1 -&gt;V_30 S_1 -&gt;V_48 S_1 -&gt;V_58 S_1 -&gt;V_95 S_1 -&gt;V_98 S_10-&gt;V_30
 ##  [7] S_10-&gt;V_35 S_10-&gt;V_53 S_10-&gt;V_58 S_10-&gt;V_86 S_10-&gt;V_89 S_10-&gt;V_97
 ## [13] S_10-&gt;V_98 S_11-&gt;V_30 S_11-&gt;V_35 S_11-&gt;V_53 S_11-&gt;V_58 S_11-&gt;V_86
@@ -762,10 +765,8 @@ v_<span class="dv">9</span>
 v_<span class="dv">9</span> &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(v_<span class="dv">9</span> <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)
 <span class="kw">as_tibble</span>(v_<span class="dv">9</span>)
 timestatus &lt;-<span class="st"> </span><span class="kw">cbind</span>(nodes, vec, v_<span class="dv">2</span>, v_<span class="dv">3</span>, v_<span class="dv">4</span>, v_<span class="dv">5</span>, v_<span class="dv">6</span>, v_<span class="dv">7</span>, v_<span class="dv">8</span>, v_<span class="dv">9</span>)
-timestatus &lt;-<span class="st"> </span><span class="kw">as.tibble</span>(timestatus)</code></pre></div>
-<pre><code>## Warning: `as.tibble()` is deprecated, use `as_tibble()` (but mind the new semantics).
-## This warning is displayed once per session.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">timestatus
+timestatus &lt;-<span class="st"> </span><span class="kw">as.tibble</span>(timestatus)
+timestatus
 
 
 #### Time 10
@@ -885,16 +886,16 @@ Spread10</code></pre></div>
 ## # Groups:   Sim [?]
 ##      Sim  Step Number_of_Nodes
 ##    &lt;dbl&gt; &lt;dbl&gt;           &lt;dbl&gt;
-##  1     1     1               5
-##  2     1     2               8
-##  3     1     3              10
-##  4     1     4              15
-##  5     1     5              20
-##  6     1     6              25
-##  7     1     7              28
-##  8     1     8              32
-##  9     1     9              38
-## 10     1    10              38
+##  1     1     1              11
+##  2     1     2              11
+##  3     1     3              13
+##  4     1     4              17
+##  5     1     5              18
+##  6     1     6              21
+##  7     1     7              24
+##  8     1     8              27
+##  9     1     9              29
+## 10     1    10              31
 ## # … with 90 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot &lt;-<span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> Spread10, <span class="dt">mapping =</span> (<span class="kw">aes</span>(<span class="dt">x =</span> Step, <span class="dt">y =</span> Number_of_Nodes))) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">color =</span> <span class="st">&quot;gray70&quot;</span>) <span class="op">+</span>

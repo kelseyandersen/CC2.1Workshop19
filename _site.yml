@@ -17,7 +17,17 @@ navbar:
       href: Describing_Networks.html
     - text: Epidemic Networks
       href: EpidemicNetworks.html
-      
+  - text: RTB Packages
+    menu:
+    - text: seedHealth
+      href: seedHealth-v8 IITA workshop.Rmd
+    - text: INA
+      href: 
+  - text: Resources
+    menu:
+    - text: Resources
+      href: Resources.Rmd
+
       
 output:
   html_document:
