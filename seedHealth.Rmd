@@ -321,8 +321,4 @@ ggplot(ps13.df, aes(xvar, yvar, fill=zvar))+
         #plot.background = element_rect(fill = "transparent",colour = NA)
         )
 
-#ggsave(filename = "figures/heatmap.transparent.png", width = 8, height = 8, bg="transparent", units = "in", dpi = 300, type="cairo-png")
-
-ggsave(filename = "figures/heatmap.png", width = 8, height = 8, bg="transparent", units = "in", dpi = 300, type="cairo-png")
-
 ```

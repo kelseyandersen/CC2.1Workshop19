@@ -506,16 +506,16 @@ Amat &lt;-<span class="st"> </span>Amat<span class="op">*</span><span class="dv"
 <span class="kw">diag</span>(Amat) &lt;-<span class="st"> </span><span class="dv">1</span> <span class="co"># set the diagonals to 1 so that if a node is infected, it stays infected</span>
 Amat <span class="co"># our randomly generated matrix</span></code></pre></div>
 <pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
-##  [1,]    1    1    0    0    0    0    0    1    0     1
-##  [2,]    1    1    0    0    0    0    1    1    1     0
-##  [3,]    1    0    1    0    0    1    1    1    0     0
-##  [4,]    0    0    1    1    0    0    1    0    0     1
-##  [5,]    0    0    1    0    1    0    0    1    1     0
-##  [6,]    0    0    1    0    0    1    0    0    1     1
-##  [7,]    0    0    0    0    0    0    1    0    0     0
-##  [8,]    0    0    1    0    0    0    0    1    0     0
-##  [9,]    0    0    1    0    0    0    0    1    1     0
-## [10,]    0    1    1    1    0    0    0    1    0     1</code></pre>
+##  [1,]    1    1    0    1    0    1    0    0    0     1
+##  [2,]    0    1    0    0    0    0    0    0    0     0
+##  [3,]    0    1    1    0    0    0    0    1    0     0
+##  [4,]    1    1    0    1    0    0    0    0    0     0
+##  [5,]    0    0    0    1    1    0    0    1    0     1
+##  [6,]    1    1    0    1    1    1    0    0    0     1
+##  [7,]    0    1    0    1    0    1    1    0    1     0
+##  [8,]    0    0    0    1    1    0    1    1    1     0
+##  [9,]    0    0    0    0    0    0    0    0    1     0
+## [10,]    0    1    0    0    1    0    0    1    1     1</code></pre>
 <p> </p>
 <p>Plot to see you network</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Mat3 &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>(Amat)
@@ -532,9 +532,9 @@ df</code></pre></div>
 <pre><code>##       Time1 Time2
 ##  [1,]     1     1
 ##  [2,]     0     1
-##  [3,]     0     1
-##  [4,]     0     0
-##  [5,]     0     0
+##  [3,]     0     0
+##  [4,]     0     1
+##  [5,]     0     1
 ##  [6,]     1     1
 ##  [7,]     1     1
 ##  [8,]     1     1
@@ -601,9 +601,9 @@ fix.layout &lt;-<span class="st"> </span><span class="kw">layout_with_dh</span>(
 FullNet2 &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(FullNet)
 FullNet3 &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>(FullNet2)
 FullNet3</code></pre></div>
-<pre><code>## IGRAPH e4cc64c DN-- 126 283 -- 
+<pre><code>## IGRAPH 4d35363 DN-- 126 283 -- 
 ## + attr: name (v/c)
-## + edges from e4cc64c (vertex names):
+## + edges from 4d35363 (vertex names):
 ##  [1] S_1 -&gt;V_30 S_1 -&gt;V_48 S_1 -&gt;V_58 S_1 -&gt;V_95 S_1 -&gt;V_98 S_10-&gt;V_30
 ##  [7] S_10-&gt;V_35 S_10-&gt;V_53 S_10-&gt;V_58 S_10-&gt;V_86 S_10-&gt;V_89 S_10-&gt;V_97
 ## [13] S_10-&gt;V_98 S_11-&gt;V_30 S_11-&gt;V_35 S_11-&gt;V_53 S_11-&gt;V_58 S_11-&gt;V_86
@@ -885,14 +885,14 @@ Spread10</code></pre></div>
 ## # Groups:   Sim [?]
 ##      Sim  Step Number_of_Nodes
 ##    &lt;dbl&gt; &lt;dbl&gt;           &lt;dbl&gt;
-##  1     1     1               6
-##  2     1     2              11
-##  3     1     3              14
-##  4     1     4              19
-##  5     1     5              22
-##  6     1     6              22
-##  7     1     7              24
-##  8     1     8              25
+##  1     1     1               7
+##  2     1     2               8
+##  3     1     3              11
+##  4     1     4              14
+##  5     1     5              17
+##  6     1     6              18
+##  7     1     7              19
+##  8     1     8              20
 ##  9     1     9              25
 ## 10     1    10              29
 ## # … with 90 more rows</code></pre>
