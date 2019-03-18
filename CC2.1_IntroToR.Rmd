@@ -1,6 +1,6 @@
 ---
 title: "Introduction to R"
-author: "Kelsey Andersen & Ravin Poudel"
+author: "Kelsey Andersen & Ravin Poudel & James Fulton"
 ---
 `r as.character(format(Sys.Date(), format="%B %d, %Y"))`
 
@@ -82,9 +82,8 @@ hist(WithR, xlab = "Self-Reported R Proficiency")
 #### Note: R is case-sensitive and unforgiving! 
 
 
-
-
 ## Getting Data Into R 
+
 
 Now make sure to place your "StripeRust.csv" file in the working directory that we set, then load the data in using the "read.csv" *function*.
 ```{r}
@@ -209,6 +208,9 @@ You can also filter based on multiple conditions.
 # Logical operators
 filter(df, Petal.Length > 6 & Sepal.Length > 7)
 ```
+
+## Arrange()
+
 Dataset is filtered based on both the criteria, and only the entries that match the set conditions are displayed. 
 
 Now, rather than filtering data with the desired criteria, we can also arrange them in our desired order- by using arrange function. 
@@ -221,6 +223,8 @@ arrange(df, Sepal.Length, Petal.Width)
 arrange(df, desc(Sepal.Length))
 ```
 
+
+## Select()
 
 Unlike filter, if you want to take a subset of data, and study them separately then you can use *select()* function to get a subset of data columns. 
 
@@ -237,6 +241,8 @@ mutate(df, log.Sepal.length = log(Sepal.Length))
 ```
 
 Another important function in `dplyr` is *summarise()*. This function allows you get summary information about the data. In the example below, we first group entries by flower species, then calculate mean petal length for each species of flower. 
+
+## Summarise()
 
 ```{r, echo= TRUE, include=TRUE}
 # find mean of peteal length
@@ -260,6 +266,8 @@ Did you notice %>% symbol? What is that?
 Now you know how to organize or clean data, which means you have become a "Data Scientist". Data science would be incomplete without good visualization tools. So, now we will explore some of the very basic plots using ggplot2 package. 
 
 Since you know so much about Iris flower data, we will use the same one for learning visualizations. However, you can use the same concepts while analyzing your own data. 
+
+## ggplot
 
 Let's see the figure first!!!
 

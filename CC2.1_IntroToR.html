@@ -412,6 +412,9 @@ WithR</code></pre></div>
 </div>
 <div id="getting-data-into-r" class="section level2">
 <h2>Getting Data Into R</h2>
+<ul>
+<li><a href="~./StripeRust.csv">RustData</a></li>
+</ul>
 <p>Now make sure to place your “StripeRust.csv” file in the working directory that we set, then load the data in using the “read.csv” <em>function</em>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RustData &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;StripeRust.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
   <span class="co">#Header = TRUE lets R know that we have headings in the first row of our data set.</span>
@@ -470,6 +473,15 @@ WithR</code></pre></div>
 <p>Tidyverse is actually an ecosystem of R packages that make organizing and visualizing your data easier.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load the library tidyverse</span>
 <span class="kw">library</span>(tidyverse)</code></pre></div>
+<pre><code>## ── Attaching packages ──────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ tibble  2.0.1     ✔ purrr   0.2.5
+## ✔ tidyr   0.8.1     ✔ dplyr   0.7.8
+## ✔ readr   1.1.1     ✔ stringr 1.3.1
+## ✔ tibble  2.0.1     ✔ forcats 0.3.0</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## ── Conflicts ─────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <div id="dataset" class="section level2">
 <h2>Dataset</h2>
 <p>In this module we will be using Iris flower dataset to learn the tools for data wrangling by using <code>dplyr</code> package. Similarly, we will use Iris dataset for exploring some of the basic plots using <code>ggplot2</code>. Both of these packages are the part of <code>tidyverse</code> package. So, if you have <code>tidyverse</code> loaded then you are ready to go!</p>
@@ -570,6 +582,9 @@ df &lt;-<span class="st"> </span><span class="kw">as.tibble</span>(iris)</code><
 ## 7          7.4         2.8          6.1         1.9 virginica
 ## 8          7.9         3.8          6.4         2   virginica
 ## 9          7.7         3            6.1         2.3 virginica</code></pre>
+</div>
+<div id="arrange" class="section level2">
+<h2>Arrange()</h2>
 <p>Dataset is filtered based on both the criteria, and only the entries that match the set conditions are displayed.</p>
 <p>Now, rather than filtering data with the desired criteria, we can also arrange them in our desired order- by using arrange function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># arrange by sepal length then petal width. Default is ascending order. </span>
@@ -604,6 +619,9 @@ df &lt;-<span class="st"> </span><span class="kw">as.tibble</span>(iris)</code><
 ##  9          7.2         3.6          6.1         2.5 virginica
 ## 10          7.2         3.2          6           1.8 virginica
 ## # … with 140 more rows</code></pre>
+</div>
+<div id="select" class="section level2">
+<h2>Select()</h2>
 <p>Unlike filter, if you want to take a subset of data, and study them separately then you can use <em>select()</em> function to get a subset of data columns.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># from iris data, lets select only three columns - Species, Petal width and Petal length</span>
 <span class="kw">select</span>(df, Species, Petal.Width, Petal.Length)</code></pre></div>
@@ -638,6 +656,9 @@ df &lt;-<span class="st"> </span><span class="kw">as.tibble</span>(iris)</code><
 ## 10          4.9         3.1          1.5         0.1 setosa 
 ## # … with 140 more rows, and 1 more variable: log.Sepal.length &lt;dbl&gt;</code></pre>
 <p>Another important function in <code>dplyr</code> is <em>summarise()</em>. This function allows you get summary information about the data. In the example below, we first group entries by flower species, then calculate mean petal length for each species of flower.</p>
+</div>
+<div id="summarise" class="section level2">
+<h2>Summarise()</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find mean of peteal length</span>
 <span class="kw">summarise</span>(df, <span class="kw">mean</span>(Petal.Length))</code></pre></div>
 <pre><code>## # A tibble: 1 x 1
@@ -666,6 +687,9 @@ df &lt;-<span class="st"> </span><span class="kw">as.tibble</span>(iris)</code><
 <p>Did you notice %&gt;% symbol? What is that? This symbol is called pipe. Yes… pipe because as the name implies, it takes in output from one operation then pass/pipe it as an input for next operation. Advantage: No need to create new object to store values at each operation.</p>
 <p>Now you know how to organize or clean data, which means you have become a “Data Scientist”. Data science would be incomplete without good visualization tools. So, now we will explore some of the very basic plots using ggplot2 package.</p>
 <p>Since you know so much about Iris flower data, we will use the same one for learning visualizations. However, you can use the same concepts while analyzing your own data.</p>
+</div>
+<div id="ggplot" class="section level2">
+<h2>ggplot</h2>
 <p>Let’s see the figure first!!!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#1 Scatter PLot</span>
 <span class="kw">ggplot</span>(<span class="dt">data=</span>df, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width))<span class="op">+</span>
