@@ -322,7 +322,7 @@ the amount of external inoculum around field, numeric or numeric vector.</p>
 <pre class="r"><code>install.packages(&quot;RColorBrewer&quot;) # remove the initial &#39;#&#39; if this is not yet installed</code></pre>
 <pre><code>## 
 ## The downloaded binary packages are in
-##  /var/folders/3f/wdpyyh2x0r5c5j0s55mwx8d80000gn/T//Rtmpf42wEY/downloaded_packages</code></pre>
+##  /var/folders/3f/wdpyyh2x0r5c5j0s55mwx8d80000gn/T//RtmpMr9Mg3/downloaded_packages</code></pre>
 <pre class="r"><code>library(RColorBrewer)
 
 out1 &lt;- onesim(pHSinit=0.8, Kx = 100, betax=0.02, wxtnormm=0.8, wxtnormsd= 0.1, hx=1, mxtnormm=1, mxtnormsd=0, axtnormm=1, axtnormsd=0, rx=0.1, zxtnormm=1, zxtnormsd= 0, gx=4,cx=0.9, phix=0, nseasons=10, HPcut=0.5, pHScut=0.5,maY=100,miY=0,thetax=0.2, Ex=0)
@@ -426,7 +426,7 @@ lines(colMeans(seas4), colMeans(int4), type=&#39;l&#39;, col=&#39;red&#39;)</cod
 <pre class="r"><code>install.packages(&quot;lattice&quot;) # remove &#39;#&#39; at beginning of line to install package</code></pre>
 <pre><code>## 
 ## The downloaded binary packages are in
-##  /var/folders/3f/wdpyyh2x0r5c5j0s55mwx8d80000gn/T//Rtmpf42wEY/downloaded_packages</code></pre>
+##  /var/folders/3f/wdpyyh2x0r5c5j0s55mwx8d80000gn/T//RtmpMr9Mg3/downloaded_packages</code></pre>
 <pre class="r"><code>library(lattice)
 
 #Low variability in selection, low initial infection (20%) 
@@ -500,17 +500,9 @@ whivarPSlobe80&lt;-wireframe(zvar ~ xvar * yvar,scales = list(arrows=FALSE, cex=
 
 print(whivarPSlobe80)</code></pre>
 <p><img src="seedHealth_files/figure-html/unnamed-chunk-4-4.png" width="672" /></p>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ──────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.1.0     ✔ purrr   0.2.5
-## ✔ tibble  2.0.1     ✔ dplyr   0.7.8
-## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
-## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## Warning: package &#39;tibble&#39; was built under R version 3.5.2</code></pre>
-<pre><code>## ── Conflicts ─────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>ggplot(ps13.df, aes(xvar, yvar, fill=zvar))+
+<pre class="r"><code>library(tidyverse)
+
+ggplot(ps13.df, aes(xvar, yvar, fill=zvar))+
   geom_tile()+
   viridis::scale_fill_viridis(option = &quot;C&quot;, 
                               guide = guide_colorbar(title = &quot;Yield Loss After 5 Seasons (%)&quot;, 
