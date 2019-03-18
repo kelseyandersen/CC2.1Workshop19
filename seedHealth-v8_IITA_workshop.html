@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Preliminary version of seedHealth package vignette v8</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">CC2.1 R Workshop</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Welcome</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Introduction to R
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="CC2.1_IntroToR.html">Introduction to R</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Networks in R
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Describing_Networks.html">Networks in R</a>
+    </li>
+    <li>
+      <a href="EpidemicNetworks.html">Epidemic Networks</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    RTB Packages
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="seedHealth.html">seedHealth</a>
+    </li>
+    <li class="dropdown-header">INA</li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Resources
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Resources.html">Resources</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Preliminary version of seedHealth package vignette v8</h1>
+
+</div>
+
+
+<div id="slides-for-ths-section-can-be-found-here" class="section level3">
+<h3>Slides for ths section can be found here:</h3>
+<ul>
+<li><a href="PDFFiles/R%20packages%20seedHealth%20and%20INAprelim.pdf">Intro to Networks in R</a></li>
+</ul>
+</div>
+<div id="seedhealth-package-applications" class="section level2">
+<h2>seedHealth package applications</h2>
+<p>This package provides a scenario analysis for evaluating outcomes for integrated seed health strategies. It is based on and builds on the analyses and code from</p>
+<p>Thomas-Sharma, S., Andrade-Piedra, J., Carvajal Yepes, M., Hernandez Nopsa, J., Jeger, M., Jones, R., Kromann, P., Legg, J., Yuen, J., Forbes, G., and Garrett, K. A. 2017. A risk assessment framework for seed degeneration: Informing an integrated seed health strategy for vegetatively-propagated crops. Phytopathology 107:1123-1135.</p>
+<p>Open access link for paper: <a href="https://apsjournals.apsnet.org/doi/10.1094/PHYTO-09-16-0340-R" class="uri">https://apsjournals.apsnet.org/doi/10.1094/PHYTO-09-16-0340-R</a></p>
+<p>Link for online Shiny interface for exploring the seedHealth model: <a href="https://yanru-xing.shinyapps.io/SDAppvX1/" class="uri">https://yanru-xing.shinyapps.io/SDAppvX1/</a></p>
+</div>
+<div id="getting-the-seedhealth-package-from-github" class="section level1">
+<h1>Getting the seedHealth package from GitHub</h1>
+<pre class="r"><code># this is a temporary fix to avoid possible error message, &quot;trying to use CRAN without setting a mirror&quot;
+options(repos=structure(c(CRAN=&quot;https://cran.cnr.berkeley.edu/&quot;)))
+
+# install devtools (only necessary once - uncomment the following line if you have not installed it yet)
+#install.packages(&quot;devtools&quot;)
+
+library(devtools)
+
+# use devtools function install_github to install the seedHealth version available on GitHub
+# this is only necessary once, until a new version is available
+# uncomment the following line if you have not installed seedHealth yet, or a new version is available
+
+#devtools::install_github(&quot;GarrettLab/seedHealth&quot;)
+
+library(seedHealth)</code></pre>
+<p>The code below uses two other R packages - these will need to be installed if they have not yet been installed. The commands for installing are commented out below, but the “#” in front of the command line can be removed to install.</p>
+</div>
+<div id="function-onesim" class="section level1">
+<h1>Function onesim</h1>
+<p>This function evaluates a time series of yield loss due to seed degeneration across seasons. Weather conduciveness to disease and other factors are included as stochastic components of the model.</p>
+</div>
+<div id="arguments-in-function-onesim" class="section level1">
+<h1>Arguments in function onesim</h1>
+<p>There are several arguments that can be modified in function onesim to describe how seed degeneration occurs over time. These arguments are described in more detail in a table in Thomas-Sharma et al. 2017.</p>
+<p>pHSinit the initial proportion of healthy seed, numeric or numeric vector. Kx<br />
+the total number of plants, positive interger, numeric or numeric vector. betax<br />
+the maximum seasonal transmission rate, numeric or numeric vector. wxtnormm<br />
+the environmental effect on transmission rate (mean of underlying normal distribution prior to truncation), numeric or numeric vector. wxtnormsd<br />
+the environmental effect on transmission rate (standard deviation of underlying normal distribution prior to truncation), numeric or numeric vector. hx<br />
+the host effect on transmission rate, numeric or numeric vector. mxtnormm<br />
+the vector management effect on transmission rate (mean of underlying normal distribution prior to truncation), numeric or numeric vector. mxtnormsd<br />
+the vector management effect on transmission rate (standard deviation of underlying normal distribution prior to truncation), numeric or numeric vector. axtnormm<br />
+the roguing effect in terms of decreased DP (mean of underlying normal distribution prior to truncation), numeric or numeric vector. axtnormsd<br />
+the roguing effect in terms of decreased DP (standard deviation of underlying normal distribution prior to truncation), numeric or numeric vector. rx<br />
+the reversion rate, numeric or numeric vector. zxtnormm<br />
+the proportional selection against diseased plants (mean of underlying normal distribution prior to truncation), numeric or numeric vector. zxtnormsd<br />
+the proportional selection against diseased plants (standard deviation of underlying normal distribution prior to truncation), numeric or numeric vector. gx<br />
+the seed production rate in healthy plants, numeric or numeric vector. cx<br />
+the proportional seed production rate in diseased plants, numeric or numeric vector. phix<br />
+the proportion clean seed purchased, numeric or numeric vector. nseasons<br />
+the number of seasons, numeric or numeric vector. HPcut<br />
+the proportion healthy plant number cutoff, numeric or numeric vector. pHScut<br />
+the proportion healthy seed cutoff, numeric or numeric vector. maY the maximum attainable yield, end of season, in the absence of disease, numeric or numeric vector. miY the minimum yield when all plants are diseased (useable yield despite disease), numeric or numeric vector. thetax<br />
+the rate of decline of Yld with increasing disease incidence, numeric or numeric vector. Ex<br />
+the amount of external inoculum around field, numeric or numeric vector.</p>
+<div id="example-of-plotting-seed-degeneration-effects-over-time" class="section level2">
+<h2>Example of plotting seed degeneration effects over time</h2>
+<p>Note that this command produces results similar to those from the online Shiny interface for seedHealth</p>
+<pre class="r"><code>#install.packages(&quot;RColorBrewer&quot;) # remove the initial &#39;#&#39; if this is not yet installed
+library(RColorBrewer)
+
+out1 &lt;- onesim(pHSinit=0.8, Kx = 100, betax=0.02, wxtnormm=0.8, wxtnormsd= 0.1, hx=1, mxtnormm=1, mxtnormsd=0, axtnormm=1, axtnormsd=0, rx=0.1, zxtnormm=1, zxtnormsd= 0, gx=4,cx=0.9, phix=0, nseasons=10, HPcut=0.5, pHScut=0.5,maY=100,miY=0,thetax=0.2, Ex=0)
+int1 &lt;- out1$outm$YL
+seas1 &lt;- out1$outm$season
+
+# nreals is the number of realizations - higher values gives a smoother plot
+nreals &lt;- 10
+
+for(i in 1:nreals){ 
+    out1 &lt;- onesim(pHSinit=0.8, Kx = 100, betax=0.02, wxtnormm=0.8, wxtnormsd= 0.1, hx=1, mxtnormm=1, mxtnormsd=0, axtnormm=1, axtnormsd=0, rx=0.1, zxtnormm=1, zxtnormsd= 0, gx=4,cx=0.9, phix=0, nseasons=10, HPcut=0.5, pHScut=0.5,maY=100,miY=0,thetax=0.2, Ex=0)
+    int1 &lt;- rbind(int1,out1$outm$YL)
+    seas1 &lt;- rbind(seas1,out1$outm$season)
+}
+
+smoothScatter(seas1,int1, xlab=&#39;&#39;, ylab=&#39;Yield loss (%)&#39;,ylim=c(0,100), font.lab=2, cex.lab=1.5, cex.axis=1.25, nrpoints=0, colramp=colorRampPalette(brewer.pal(8,&quot;Greys&quot;)))
+lines(colMeans(seas1), colMeans(int1), type=&#39;l&#39;, col=&#39;red&#39;)</code></pre>
+<p><img src="seedHealth-v8_IITA_workshop_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code># Could produce a summary table
+#write.table(x=int1, file=paste(&#39;int_out1&#39;,&#39;csv&#39;, sep=&#39;.&#39;), sep=&#39;,&#39;,append=F, row.names=FALSE)</code></pre>
+</div>
+<div id="fig.-2.-from-thomas-sharma-et-al.-2017-long-term-yield-loss-under-no-management-scenarios" class="section level2">
+<h2>Fig. 2. from Thomas-Sharma et al. 2017: Long-term yield loss under no management scenarios</h2>
+<pre class="r"><code>par(mfrow=c(2,2), mar=c(4,4.4,0.5,0.5), oma=c(0.5,0.5,0.25,0.25))
+
+out1 &lt;- onesim(pHSinit=0.8, Kx = 100, betax=0.02, wxtnormm=0.8, wxtnormsd= 0.1, hx=1, mxtnormm=1, mxtnormsd=0, axtnormm=1, axtnormsd=0, rx=0.1, zxtnormm=1, zxtnormsd= 0, gx=4,cx=0.9, phix=0, nseasons=10, HPcut=0.5, pHScut=0.5,maY=100,miY=0,thetax=0.2, Ex=0)
+int1 &lt;- out1$outm$YL
+seas1 &lt;- out1$outm$season
+
+# temporary note: wxd and wdsamp were removed
+
+# nreals is the number of realizations - higher values gives a smoother plot
+nreals &lt;- 10
+
+for(i in 1:nreals){ 
+    out1 &lt;- onesim(pHSinit=0.8, Kx = 100, betax=0.02, wxtnormm=0.8, wxtnormsd= 0.1, hx=1, mxtnormm=1, mxtnormsd=0, axtnormm=1, axtnormsd=0, rx=0.1, zxtnormm=1, zxtnormsd= 0, gx=4,cx=0.9, phix=0, nseasons=10, HPcut=0.5, pHScut=0.5,maY=100,miY=0,thetax=0.2, Ex=0)
+    int1 &lt;- rbind(int1,out1$outm$YL)
+    seas1 &lt;- rbind(seas1,out1$outm$season)
+}
+
+# Could produce an about table
+# write.table(x=int1, file=paste(&#39;int_out1&#39;,&#39;csv&#39;, sep=&#39;.&#39;), sep=&#39;,&#39;,append=F, row.names=FALSE)
+
+smoothScatter(seas1,int1, xlab=&#39;&#39;, ylab=&#39;Yield loss (%)&#39;,ylim=c(0,100), font.lab=2, cex.lab=1.5, cex.axis=1.25, nrpoints=0, colramp=colorRampPalette(brewer.pal(8,&quot;Greys&quot;)))
+lines(colMeans(seas1), colMeans(int1), type=&#39;l&#39;, col=&#39;red&#39;)
+
+out2 &lt;- onesim(pHSinit=0.8, Kx = 100, betax=0.02, wxtnormm=0.8, wxtnormsd= 0.3, hx=1, mxtnormm=1, mxtnormsd=0, axtnormm=1, axtnormsd=0, rx=0.1, zxtnormm=1, zxtnormsd= 0,gx=4,cx=0.9, phix=0, nseasons=10, HPcut=0.5, pHScut=0.5,maY=100,miY=0,thetax=0.2, Ex=0)
+int2 &lt;- out2$outm$YL
+seas2 &lt;- out2$outm$season
+
+# for speed, only &quot;i in 1:10&quot;
+
+for(i in 1:nreals){ # higher values make a smoother plot
+    out2 &lt;- onesim(pHSinit=0.8, Kx = 100, betax=0.02, wxtnormm=0.8, wxtnormsd= 0.3, hx=1, mxtnormm=1, mxtnormsd=0, axtnormm=1, axtnormsd=0, rx=0.1, zxtnormm=1, zxtnormsd= 0, gx=4,cx=0.9, phix=0, nseasons=10, HPcut=0.5, pHScut=0.5,maY=100,miY=0, thetax=0.2, Ex=0)
+    int2 &lt;- rbind(int2,out2$outm$YL)
+    seas2 &lt;- rbind(seas2,out2$outm$season)
+}
+
+#write.table(x=int2, file=paste(&#39;int_out2&#39;,&#39;csv&#39;, sep=&#39;.&#39;), sep=&#39;,&#39;,append=F, row.names=FALSE)
+
+smoothScatter(seas2,int2, xlab=&#39;&#39;, ylab=&#39;&#39;,ylim=c(0,100), font.lab=2, cex.lab=1.5, cex.axis=1.25, nrpoints=0, colramp=colorRampPalette(brewer.pal(8,&quot;Greys&quot;)))
+lines(colMeans(seas2), colMeans(int2), type=&#39;l&#39;, col=&#39;red&#39;)
+
+out3 &lt;- onesim(pHSinit=0.8, Kx = 100, betax=0.02, wxtnormm=0.2, wxtnormsd= 0.1, hx=1, mxtnormm=1, mxtnormsd=0, axtnormm=1, axtnormsd=0, rx=0.1, zxtnormm=1, zxtnormsd= 0, gx=4,cx=0.9, phix=0, nseasons=10, HPcut=0.5, pHScut=0.5,maY=100,miY=0,thetax=0.2, Ex=0)
+int3 &lt;- out3$outm$YL
+seas3 &lt;- out3$outm$season
+
+
+for(i in 1:nreals){ # higher values make a smoother plot
+    out3 &lt;- onesim(pHSinit=0.8, Kx = 100, betax=0.02, wxtnormm=0.2, wxtnormsd= 0.1, hx=1, mxtnormm=1, mxtnormsd=0, axtnormm=1, axtnormsd=0, rx=0.1, zxtnormm=1, zxtnormsd= 0,gx=4,cx=0.9, phix=0, nseasons=10, HPcut=0.5, pHScut=0.5,maY=100,miY=0,thetax=0.2, Ex=0)
+    int3 &lt;- rbind(int3,out3$outm$YL)
+    seas3 &lt;- rbind(seas3,out3$outm$season)
+}
+#write.table(x=int3, file=paste(&#39;int_out3&#39;,&#39;csv&#39;, sep=&#39;.&#39;), sep=&#39;,&#39;,append=F, row.names=FALSE)
+
+smoothScatter(seas3,int3, xlab=&#39;Number of seasons&#39;, ylab=&#39;Yield loss (%)&#39;,ylim=c(0,100), font.lab=2, cex.lab=1.5, cex.axis=1.25, nrpoints=0, colramp=colorRampPalette(brewer.pal(8,&quot;Greys&quot;)))
+lines(colMeans(seas3), colMeans(int3), type=&#39;l&#39;, col=&#39;red&#39;)
+
+out4 &lt;- onesim(pHSinit=0.8, Kx = 100, betax=0.02, wxtnormm=0.2, wxtnormsd= 0.3, hx=1, mxtnormm=1, mxtnormsd=0, axtnormm=1, axtnormsd=0, rx=0.1, zxtnormm=1, zxtnormsd= 0, gx=4,cx=0.9, phix=0, nseasons=10, HPcut=0.5, pHScut=0.5,maY=100,miY=0,thetax=0.2, Ex=0)
+int4 &lt;- out4$outm$YL
+seas4 &lt;- out4$outm$season
+
+for(i in 1:nreals){ # higher values make a smoother plot
+    out4&lt;- onesim(pHSinit=0.8, Kx = 100, betax=0.02, wxtnormm=0.2, wxtnormsd= 0.3, hx=1, mxtnormm=1, mxtnormsd=0, axtnormm=1, axtnormsd=0, rx=0.1, zxtnormm=1, zxtnormsd= 0, gx=4,cx=0.9, phix=0, nseasons=10, HPcut=0.5, pHScut=0.5,maY=100,miY=0,thetax=0.2, Ex=0)
+    int4 &lt;- rbind(int4,out4$outm$YL)
+    seas4 &lt;- rbind(seas4,out4$outm$season)
+}
+
+# write.table(x=int4, file=paste(&#39;int_out4&#39;,&#39;csv&#39;, sep=&#39;.&#39;), sep=&#39;,&#39;,append=F, row.names=FALSE)
+
+smoothScatter(seas4,int4, xlab=&#39;Number of seasons&#39;, ylab=&#39;&#39;,ylim=c(0,100), font.lab=2, cex.lab=1.5, cex.axis=1.25, nrpoints=0, colramp=colorRampPalette(brewer.pal(8,&quot;Greys&quot;)))
+lines(colMeans(seas4), colMeans(int4), type=&#39;l&#39;, col=&#39;red&#39;)</code></pre>
+<p><img src="seedHealth-v8_IITA_workshop_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+</div>
+<div id="function-multipar" class="section level1">
+<h1>Function multipar</h1>
+<p>This function evaluates multiple simulations for multiple parameter combinations.</p>
+<div id="thomas-sharma-et-al.-2017-fig-5.-variability-in-positive-selection" class="section level2">
+<h2>Thomas-Sharma et al. 2017; Fig 5. Variability in positive selection</h2>
+<pre class="r"><code># install.packages(&quot;lattice&quot;) # remove &#39;#&#39; at beginning of line to install package
+library(lattice)
+
+#Low variability in selection, low initial infection (20%) 
+
+out.PS10&lt;- multipar(pHSinit=0.8, Kx = 100, betax=0.02, wxtnormm=seq(0,1,0.05), wxtnormsd= 0.3, hx=1, mxtnormm=1,mxtnormsd=0, axtnormm=1, axtnormsd=0, rx=0.1, zxtnormm=seq(0,1,0.05), zxtnormsd= 0.1, gx=4, cx=0.9, phix=0, nseasons=5, nsim=nreals, HPcut=0.5, pHScut=0.5,maY=100,miY=0, thetax=0.2, Ex=0)
+
+#write.table(x=out.PS10, file=paste(&#39;out.PS10&#39;,&#39;csv&#39;, sep=&#39;.&#39;), sep=&#39;,&#39;,append=F, row.names=FALSE)
+
+xvar &lt;- 1-out.PS10$zxtnormm
+yvar&lt;- out.PS10$wxtnormm
+zvar &lt;- out.PS10$fYLmean
+
+wlovarPSlobe20&lt;- wireframe(zvar ~ xvar * yvar, data = out.PS10, scales = list(arrows=FALSE, cex= 1.25, col = &quot;black&quot;, font = 1, distance=c(1,1,1)), screen = list(z =-50, x = -75), xlab = list(&#39;Healthy seeds \n selected&#39;, rot=-27, cex=1.25, font=2), ylab = list(&#39;Disease-conducive \n weather&#39;, rot=20, cex=1.25, font=2), zlab =list(&#39;Yield loss after 5 seasons (%)&#39;, rot=90, cex=1.25, font=2) , zlim = range(seq(0, 100,20)), zoom=0.8)
+
+#trellis.device(device=&#39;pdf&#39;,file=&quot;wlovarPSlobe20.pdf&quot;, paper=&#39;a4&#39;)
+#trellis.par.set(&quot;axis.line&quot;, list(col=&quot;transparent&quot;))
+print(wlovarPSlobe20)</code></pre>
+<p><img src="seedHealth-v8_IITA_workshop_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>#dev.off()
+
+#High variability in selection, low initial infection (20%)  
+
+out.PS11  &lt;- multipar(pHSinit=0.8, Kx = 100, betax=0.02, wxtnormm=seq(0,1,0.05), wxtnormsd= 0.3, hx=1, mxtnormm=1,mxtnormsd=0, axtnormm=1, axtnormsd=0, rx=0.1, zxtnormm=seq(0,1,0.05), zxtnormsd= 0.3, gx=4, cx=0.9, phix=0, nseasons=5, nsim=nreals, HPcut=0.5, pHScut=0.5,maY=100,miY=0, thetax=0.2, Ex=0)
+
+#write.table(x=out.PS11, file=paste(&#39;out.PS11&#39;,&#39;csv&#39;, sep=&#39;.&#39;), sep=&#39;,&#39;,append=F, row.names=FALSE)
+
+xvar &lt;- 1-out.PS11$zxtnormm
+yvar&lt;- out.PS11$wxtnormm
+zvar &lt;- out.PS11$fYLmean
+
+whivarPSlobe20&lt;-wireframe(zvar ~ xvar * yvar, data = out.PS11, scales = list(arrows=FALSE, cex= 1.25, col = &quot;black&quot;, font = 1, distance=c(1,1,1)), screen = list(z =-50, x = -75), xlab = list(&#39;Healthy seeds \n selected&#39;, rot=-27, cex=1.25, font=2), ylab = list(&#39;Disease-conducive \n weather&#39;, rot=20, cex=1.25, font=2), zlab =list(&#39;Yield loss after 5 seasons (%)&#39;, rot=90, cex=1.25, font=2) , zlim = range(seq(0, 100,20)), zoom=0.8)
+
+#trellis.device(device=&#39;pdf&#39;,file=&quot;whivarPSlobe20.pdf&quot;, paper=&#39;a4&#39;)
+#trellis.par.set(&quot;axis.line&quot;, list(col=&quot;transparent&quot;))
+print(whivarPSlobe20)</code></pre>
+<p><img src="seedHealth-v8_IITA_workshop_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<pre class="r"><code>#dev.off()
+
+#Low variability in selection, high initial infection (80%) 
+
+out.PS14&lt;- multipar(pHSinit=0.2, Kx = 100, betax=0.02, wxtnormm=seq(0,1,0.05), wxtnormsd= 0.3, hx=1, mxtnormm=1,mxtnormsd=0, axtnormm=1, axtnormsd=0, rx=0.1, zxtnormm=seq(0,1,0.05), zxtnormsd= 0.1, gx=4, cx=0.9, phix=0, nseasons=5, nsim=nreals, HPcut=0.5, pHScut=0.5,maY=100,miY=0, thetax=0.2, Ex=0)
+
+#write.table(x=out.PS14, file=paste(&#39;out.PS14&#39;,&#39;csv&#39;, sep=&#39;.&#39;), sep=&#39;,&#39;,append=F, row.names=FALSE)
+
+xvar &lt;- 1-out.PS14$zxtnormm
+yvar&lt;- out.PS14$wxtnormm
+zvar &lt;- out.PS14$fYLmean
+
+wlovarPSlobe80&lt;- wireframe(zvar ~ xvar * yvar, data = out.PS14, scales = list(arrows=FALSE, cex= 1.25, col = &quot;black&quot;, font = 1, distance=c(1,1,1)), screen = list(z =-50, x = -75), xlab = list(&#39;Healthy seeds \n selected&#39;, rot=-27, cex=1.25, font=2), ylab = list(&#39;Disease-conducive \n weather&#39;, rot=20, cex=1.25, font=2), zlab =list(&#39;Yield loss after 5 seasons (%)&#39;, rot=90, cex=1.25, font=2) , zlim = range(seq(0, 100,20)), zoom=0.8)
+
+#trellis.device(device=&#39;pdf&#39;,file=&quot;wlovarPSlobe80.pdf&quot;, paper=&#39;a4&#39;)
+#trellis.par.set(&quot;axis.line&quot;, list(col=&quot;transparent&quot;))
+print(wlovarPSlobe80)</code></pre>
+<p><img src="seedHealth-v8_IITA_workshop_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
+<pre class="r"><code>#dev.off()
+
+#High variability in selection, high initial infection (80%) 
+
+out.PS13&lt;- multipar(pHSinit=0.2, Kx = 100, betax=0.02, wxtnormm=seq(0,1,0.05), wxtnormsd= 0.3, hx=1, mxtnormm=1,mxtnormsd=0, axtnormm=1, axtnormsd=0, rx=0.1, zxtnormm=seq(0,1,0.05), zxtnormsd= 0.3, gx=4, cx=0.9, phix=0, nseasons=5, nsim=nreals, HPcut=0.5, pHScut=0.5,maY=100,miY=0, thetax=0.2, Ex=0)
+
+#write.table(x=out.PS13, file=paste(&#39;out.PS13&#39;,&#39;csv&#39;, sep=&#39;.&#39;), sep=&#39;,&#39;,append=F, row.names=FALSE)
+
+xvar &lt;- 1-out.PS13$zxtnormm
+yvar&lt;- out.PS13$wxtnormm
+zvar &lt;- out.PS13$fYLmean
+
+ps13.df&lt;-data.frame(xvar, yvar, zvar)
+
+
+whivarPSlobe80&lt;-wireframe(zvar ~ xvar * yvar,scales = list(arrows=FALSE, cex= 1.25, col = &quot;black&quot;, font = 1, distance=c(1,1,1)), screen = list(z =-50, x = -75), xlab = list(&#39;Healthy seeds \n selected&#39;, rot=-27, cex=1.25, font=2), ylab = list(&#39;Disease-conducive \n weather&#39;, rot=20, cex=1.25, font=2), zlab =list(&#39;Yield loss after 5 seasons (%)&#39;, rot=90, cex=1.25, font=2) , zlim = range(seq(0, 100,20)), zoom=0.8)
+
+print(whivarPSlobe80)</code></pre>
+<p><img src="seedHealth-v8_IITA_workshop_files/figure-html/unnamed-chunk-4-4.png" width="672" /></p>
+<pre class="r"><code>library(tidyverse)
+
+ggplot(ps13.df, aes(xvar, yvar, fill=zvar))+
+  geom_tile()+
+  viridis::scale_fill_viridis(option = &quot;C&quot;, 
+                              guide = guide_colorbar(title = &quot;Yield Loss After 5 Seasons (%)&quot;, 
+                                                     title.position = &quot;top&quot;,
+                                                     direction=&quot;horizontal&quot;,
+                                                     barwidth = 20, 
+                                                     barheight = 2,
+                                                     frame.colour = &quot;black&quot;)) +
+  theme_classic()+
+  xlab(&#39;Healthy Seeds Selected&#39;)+
+  ylab(&#39;Disease-Conducive Weather&#39;)+
+  theme(legend.position = &quot;bottom&quot;,
+        legend.title.align=0.5,
+        axis.title = element_text(face = &quot;bold&quot;, 
+                                  size = 20),
+        axis.text = element_text(size = 16),
+        legend.title = element_text(size = 16,
+                                    face=&quot;bold&quot;),
+        legend.text = element_text(size = 16),
+        #legend.background = element_blank(),
+        #legend.box.background = element_blank(),
+        #panel.grid.major = element_blank(), 
+        #panel.grid.minor = element_blank(),
+        #panel.background = element_rect(fill = &quot;transparent&quot;,colour = NA),
+        #plot.background = element_rect(fill = &quot;transparent&quot;,colour = NA)
+        )</code></pre>
+<p><img src="seedHealth-v8_IITA_workshop_files/figure-html/unnamed-chunk-4-5.png" width="672" /></p>
+<pre class="r"><code>#ggsave(filename = &quot;figures/heatmap.transparent.png&quot;, width = 8, height = 8, bg=&quot;transparent&quot;, units = &quot;in&quot;, dpi = 300, type=&quot;cairo-png&quot;)
+
+ggsave(filename = &quot;figures/heatmap.png&quot;, width = 8, height = 8, bg=&quot;transparent&quot;, units = &quot;in&quot;, dpi = 300, type=&quot;cairo-png&quot;)</code></pre>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
