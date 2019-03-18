@@ -17,7 +17,7 @@ navbar:
       href: Describing_Networks.html
     - text: Epidemic Networks
       href: EpidemicNetworks.html
-  - text: RTB Packages
+  - text: RTB Packages 
     menu:
     - text: seedHealth
       href: seedHealth.html
