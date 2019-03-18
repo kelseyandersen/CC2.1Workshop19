@@ -1,18 +1,10 @@
 ---
 title: "Preliminary version of seedHealth package vignette v8"
-output:
-  html_document: default
-  pdf_document: default
-  word_document: default
 ---
 
 ###Slides for ths section can be found here: 
 
-* [Intro to Networks in R](PDFFiles/R packages seedHealth and INAprelim.pdf)
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+* [seedHealth and INA](PDFFiles/R packages seedHealth and INAprelim.pdf)
 
 ## seedHealth package applications
 
@@ -28,13 +20,7 @@ https://yanru-xing.shinyapps.io/SDAppvX1/
 # Getting the seedHealth package from GitHub
 
 ```{r echo=TRUE}
-
-# this is a temporary fix to avoid possible error message, "trying to use CRAN without setting a mirror"
 options(repos=structure(c(CRAN="https://cran.cnr.berkeley.edu/")))
-
-#install devtools (only necessary once - uncomment the following line if you have not installed it yet)
-install.packages("devtools")
-
 library(devtools)
 
 # use devtools function install_github to install the seedHealth version available on GitHub

@@ -15,30 +15,42 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
 
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { font-weight: bold; } /* Keyword */
+code > span.dt { text-decoration: underline; } /* DataType */
+code > span.co { font-style: italic; } /* Comment */
+code > span.al { font-weight: bold; } /* Alert */
+code > span.er { font-weight: bold; } /* Error */
+code > span.wa { font-style: italic; } /* Warning */
+code > span.cf { font-weight: bold; } /* ControlFlow */
+code > span.pp { font-weight: bold; } /* Preprocessor */
+code > span.do { font-style: italic; } /* Documentation */
+code > span.an { font-style: italic; } /* Annotation */
+code > span.cv { font-style: italic; } /* CommentVar */
+code > span.in { font-style: italic; } /* Information */
+</style>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
-}
-</script>
-
 
 
 <style type="text/css">
@@ -68,6 +80,7 @@ h6 {
 }
 </style>
 
+<link rel="stylesheet" href="styles.css" type="text/css" />
 
 </head>
 
@@ -102,34 +115,34 @@ button.code-folding-btn:focus {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 51px;
+  padding-top: 60px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 
 .section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 </style>
 
@@ -164,6 +177,101 @@ $(document).ready(function () {
 <!-- code folding -->
 
 
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -273,76 +381,76 @@ $(document).ready(function () {
 <div id="a-simple-example" class="section level2">
 <h2>A simple example</h2>
 <p>Consider a simple adjacency matrix, which will be used to illustrate the functions.</p>
-<pre class="r"><code>library(&#39;igraph&#39;)
-Amat &lt;- matrix(c(1,0,0,0,1,1,0,0,0,1,1,0,1,1,1,1),nrow=4,ncol=4)
-Amati &lt;- graph.adjacency(Amat)
-plot(Amati)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&#39;igraph&#39;</span>)
+Amat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>),<span class="dt">nrow=</span><span class="dv">4</span>,<span class="dt">ncol=</span><span class="dv">4</span>)
+Amati &lt;-<span class="st"> </span><span class="kw">graph.adjacency</span>(Amat)
+<span class="kw">plot</span>(Amati)</code></pre></div>
 <p><img src="INA_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<pre class="r"><code>sAmat &lt;- Amat * 0.7 # each potential link has probability 0.7 of existing - this will sometimes be useful</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sAmat &lt;-<span class="st"> </span>Amat <span class="op">*</span><span class="st"> </span><span class="fl">0.7</span> <span class="co"># each potential link has probability 0.7 of existing - this will sometimes be useful</span></code></pre></div>
 </div>
 <div id="illustration" class="section level2">
 <h2>Illustration</h2>
 <p>For a single selected starting node, the invdetf function yields a vector of the number of nodes invaded for each sampling node by the time invasion reaches (is detected at) that sampling node, and the time step of first invasion at the sampling node - for one simulation.</p>
 <p>The following code creates the function invdetf.</p>
-<pre class="r"><code>invdetf &lt;- function(adjmat, start.choice, stoch=F){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">invdetf &lt;-<span class="st"> </span><span class="cf">function</span>(adjmat, start.choice, <span class="dt">stoch=</span>F){
 
   ### for all three functions, need to add in the definitions for the input variables...
   
-  dimL &lt;- dim(adjmat)[1] # number of rows of adjacency matrix
-  t1 &lt;- matrix( 0 * 1:dimL, nrow=1)
-  t1[,start.choice] &lt;- 1 # starting node labelled 1
+  dimL &lt;-<span class="st"> </span><span class="kw">dim</span>(adjmat)[<span class="dv">1</span>] <span class="co"># number of rows of adjacency matrix</span>
+  t1 &lt;-<span class="st"> </span><span class="kw">matrix</span>( <span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span>dimL, <span class="dt">nrow=</span><span class="dv">1</span>)
+  t1[,start.choice] &lt;-<span class="st"> </span><span class="dv">1</span> <span class="co"># starting node labelled 1</span>
   
-  # if a stochastic model, generate the adjacency matrix for this simulation
-    # if stochastic, assumes the adjacency matrix is made up of probabilities
+  <span class="co"># if a stochastic model, generate the adjacency matrix for this simulation</span>
+    <span class="co"># if stochastic, assumes the adjacency matrix is made up of probabilities</span>
 
-  if(stoch){ # need to think about the temporal resolution of stochasticity...
-    adjmat &lt;- (matrix(runif(dimL^2), ncol=dimL) &lt; adjmat)
+  <span class="cf">if</span>(stoch){ <span class="co"># need to think about the temporal resolution of stochasticity...</span>
+    adjmat &lt;-<span class="st"> </span>(<span class="kw">matrix</span>(<span class="kw">runif</span>(dimL<span class="op">^</span><span class="dv">2</span>), <span class="dt">ncol=</span>dimL) <span class="op">&lt;</span><span class="st"> </span>adjmat)
   }
 
-  # generate the infection status for each node at each time point until spread stops
+  <span class="co"># generate the infection status for each node at each time point until spread stops</span>
 
-  outmat &lt;- t1
-  infcount.pre &lt;- 1
-  infcount.post &lt;- -9 # perhaps improve structure
+  outmat &lt;-<span class="st"> </span>t1
+  infcount.pre &lt;-<span class="st"> </span><span class="dv">1</span>
+  infcount.post &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">9</span> <span class="co"># perhaps improve structure</span>
 
-  while(sum(t1) &lt; dimL &amp; infcount.pre != infcount.post){
-    infcount.pre &lt;- sum(t1) # perhaps change to infcount.pre &lt;- infcount.post
-    t1 &lt;- as.numeric(t1 %*% adjmat &gt; 0)
-    infcount.post &lt;- sum(t1)
-    outmat &lt;- rbind(outmat,t1) # row i is the ith time point
+  <span class="cf">while</span>(<span class="kw">sum</span>(t1) <span class="op">&lt;</span><span class="st"> </span>dimL <span class="op">&amp;</span><span class="st"> </span>infcount.pre <span class="op">!=</span><span class="st"> </span>infcount.post){
+    infcount.pre &lt;-<span class="st"> </span><span class="kw">sum</span>(t1) <span class="co"># perhaps change to infcount.pre &lt;- infcount.post</span>
+    t1 &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(t1 <span class="op">%*%</span><span class="st"> </span>adjmat <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)
+    infcount.post &lt;-<span class="st"> </span><span class="kw">sum</span>(t1)
+    outmat &lt;-<span class="st"> </span><span class="kw">rbind</span>(outmat,t1) <span class="co"># row i is the ith time point</span>
   }
 
-  # find the num infected for each single sampling node, 
-     # assuming infected node stays infected...
-    # consider whether to set diag...
+  <span class="co"># find the num infected for each single sampling node, </span>
+     <span class="co"># assuming infected node stays infected...</span>
+    <span class="co"># consider whether to set diag...</span>
 
-  # find the number of nodes infected at each time
-  inft &lt;- rowSums(outmat)
+  <span class="co"># find the number of nodes infected at each time</span>
+  inft &lt;-<span class="st"> </span><span class="kw">rowSums</span>(outmat)
 
-  # find the first time each node is invaded, and number of nodes infected at that time
-  firstt &lt;- -99 + 0*1:dimL # first time each node is invaded
-  numt &lt;- firstt # number of nodes infected at that time
+  <span class="co"># find the first time each node is invaded, and number of nodes infected at that time</span>
+  firstt &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">99</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span><span class="op">*</span><span class="dv">1</span><span class="op">:</span>dimL <span class="co"># first time each node is invaded</span>
+  numt &lt;-<span class="st"> </span>firstt <span class="co"># number of nodes infected at that time</span>
 
-  for (i in 1:dimL){ # col i is the ith sample node
+  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>dimL){ <span class="co"># col i is the ith sample node</span>
 
-    if (sum(outmat[,i] &gt; 0)){ # if node i ever gets infected
-      firstt[i] &lt;- min(which(outmat[,i] &gt; 0)) # first time
-      numt[i] &lt;- inft[firstt[i]] # how many nodes at that time
+    <span class="cf">if</span> (<span class="kw">sum</span>(outmat[,i] <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)){ <span class="co"># if node i ever gets infected</span>
+      firstt[i] &lt;-<span class="st"> </span><span class="kw">min</span>(<span class="kw">which</span>(outmat[,i] <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)) <span class="co"># first time</span>
+      numt[i] &lt;-<span class="st"> </span>inft[firstt[i]] <span class="co"># how many nodes at that time</span>
     }
-    else {
-      firstt[i] &lt;- Inf
-      numt[i] &lt;- max(inft)
+    <span class="cf">else</span> {
+      firstt[i] &lt;-<span class="st"> </span><span class="ot">Inf</span>
+      numt[i] &lt;-<span class="st"> </span><span class="kw">max</span>(inft)
     }
 
   }
 
-  # for each node, time first invaded and number of nodes infected at that time
-  sampnode &lt;- cbind(firstt, numt)
+  <span class="co"># for each node, time first invaded and number of nodes infected at that time</span>
+  sampnode &lt;-<span class="st"> </span><span class="kw">cbind</span>(firstt, numt)
 
-  list(outmat=outmat, sampnode=sampnode)
-}</code></pre>
+  <span class="kw">list</span>(<span class="dt">outmat=</span>outmat, <span class="dt">sampnode=</span>sampnode)
+}</code></pre></div>
 <p>The output is two matrices. The first matrix gives the infection status for each node (column) at each time point (row) until there is no further spread. The second matrix gives, for each node (row), the time until infection (column 1) and the number of nodes infected when at that time (column 2).</p>
-<pre class="r"><code>invdetf(adjmat=Amat, start.choice=2) # in this case, the second node was selected as the starting point</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">invdetf</span>(<span class="dt">adjmat=</span>Amat, <span class="dt">start.choice=</span><span class="dv">2</span>) <span class="co"># in this case, the second node was selected as the starting point</span></code></pre></div>
 <pre><code>## $outmat
 ##    [,1] [,2] [,3] [,4]
 ##       0    1    0    0
@@ -355,73 +463,73 @@ plot(Amati)</code></pre>
 ## [2,]      1    1
 ## [3,]      2    3
 ## [4,]      2    3</code></pre>
-<pre class="r"><code>invdetf(adjmat=sAmat, start.choice=2,stoch=T) # stochastic version</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">invdetf</span>(<span class="dt">adjmat=</span>sAmat, <span class="dt">start.choice=</span><span class="dv">2</span>,<span class="dt">stoch=</span>T) <span class="co"># stochastic version</span></code></pre></div>
 <pre><code>## $outmat
 ##    [,1] [,2] [,3] [,4]
 ##       0    1    0    0
-## t1    0    0    1    1
-## t1    0    0    1    1
+## t1    0    1    0    1
+## t1    0    1    0    1
 ## 
 ## $sampnode
 ##      firstt numt
 ## [1,]    Inf    2
 ## [2,]      1    1
-## [3,]      2    2
+## [3,]    Inf    2
 ## [4,]      2    2</code></pre>
 <p>The function allstartf summarizes this analysis across all potential starting points. The following code creates allstartf.</p>
-<pre class="r"><code>allstartf &lt;- function(adjmat2, stoch2=F){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">allstartf &lt;-<span class="st"> </span><span class="cf">function</span>(adjmat2, <span class="dt">stoch2=</span>F){
 
-  dimL &lt;- dim(adjmat2)[1]
+  dimL &lt;-<span class="st"> </span><span class="kw">dim</span>(adjmat2)[<span class="dv">1</span>]
 
-  alloutmat &lt;- matrix(-99, ncol=dimL, nrow=dimL)
+  alloutmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="op">-</span><span class="dv">99</span>, <span class="dt">ncol=</span>dimL, <span class="dt">nrow=</span>dimL)
 
-  for (i in 1:dimL) {
-    alloutmat[i,] &lt;- invdetf(adjmat=adjmat2, start.choice=i, stoch=stoch2)$sampnode[,2]
+  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>dimL) {
+    alloutmat[i,] &lt;-<span class="st"> </span><span class="kw">invdetf</span>(<span class="dt">adjmat=</span>adjmat2, <span class="dt">start.choice=</span>i, <span class="dt">stoch=</span>stoch2)<span class="op">$</span>sampnode[,<span class="dv">2</span>]
   }
 
 alloutmat
-}</code></pre>
+}</code></pre></div>
 <p>The output is a matrix with entries being the number of nodes infected by the time an invasion is detected at each potential sampling node. Rows in this matrix are potential introduction nodes and columns are potential sampling nodes. For the stochastic case, the result is based on only one simulation (at this point in the analysis).</p>
 <p>Note that the diagonal contains ones, because when a node is both the starting point and the sampling point, the epidemic will only have reached one node before detection.</p>
-<pre class="r"><code>allstartf(adjmat2=Amat)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">allstartf</span>(<span class="dt">adjmat2=</span>Amat)</code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4]
 ## [1,]    1    3    4    3
 ## [2,]    3    1    3    3
 ## [3,]    2    2    1    2
 ## [4,]    1    1    1    1</code></pre>
-<pre class="r"><code>allstartf(adjmat2=sAmat, stoch2=T)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">allstartf</span>(<span class="dt">adjmat2=</span>sAmat, <span class="dt">stoch2=</span>T)</code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4]
-## [1,]    1    3    4    3
-## [2,]    1    1    1    1
+## [1,]    1    2    3    4
+## [2,]    3    1    3    3
 ## [3,]    1    1    1    1
 ## [4,]    1    1    1    1</code></pre>
 <p>The function multisimf performs the same analysis, for the specified number of simulations.</p>
-<pre class="r"><code>multisimf &lt;- function(adjmat3, stoch3=F, nsim=1) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multisimf &lt;-<span class="st"> </span><span class="cf">function</span>(adjmat3, <span class="dt">stoch3=</span>F, <span class="dt">nsim=</span><span class="dv">1</span>) {
 
-  dimL &lt;- dim(adjmat3)[1]
+  dimL &lt;-<span class="st"> </span><span class="kw">dim</span>(adjmat3)[<span class="dv">1</span>]
 
-  outarr &lt;- array(-99, c(dimL,dimL,nsim)) # all results
-  meanarr &lt;- matrix(-99, ncol=dimL, nrow=dimL) # mean of results
-  vararr &lt;- meanarr # variance of results
+  outarr &lt;-<span class="st"> </span><span class="kw">array</span>(<span class="op">-</span><span class="dv">99</span>, <span class="kw">c</span>(dimL,dimL,nsim)) <span class="co"># all results</span>
+  meanarr &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="op">-</span><span class="dv">99</span>, <span class="dt">ncol=</span>dimL, <span class="dt">nrow=</span>dimL) <span class="co"># mean of results</span>
+  vararr &lt;-<span class="st"> </span>meanarr <span class="co"># variance of results</span>
 
-  for (i3 in 1:nsim){
-    tempout &lt;- allstartf(adjmat2=adjmat3,stoch2=stoch3)
-    outarr[,,i3] &lt;- tempout
+  <span class="cf">for</span> (i3 <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim){
+    tempout &lt;-<span class="st"> </span><span class="kw">allstartf</span>(<span class="dt">adjmat2=</span>adjmat3,<span class="dt">stoch2=</span>stoch3)
+    outarr[,,i3] &lt;-<span class="st"> </span>tempout
   }
 
-  for (i3 in 1:dimL) {
-    for (i4 in 1:dimL) {
-      meanarr[i3,i4] &lt;- mean(outarr[i3,i4,])
-      vararr[i3,i4] &lt;- var(outarr[i3,i4,])
+  <span class="cf">for</span> (i3 <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>dimL) {
+    <span class="cf">for</span> (i4 <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>dimL) {
+      meanarr[i3,i4] &lt;-<span class="st"> </span><span class="kw">mean</span>(outarr[i3,i4,])
+      vararr[i3,i4] &lt;-<span class="st"> </span><span class="kw">var</span>(outarr[i3,i4,])
   } }
-# consider potential use of apply to replace the second loop
+<span class="co"># consider potential use of apply to replace the second loop</span>
 
-  list(outarr=outarr, meanarr=meanarr, vararr=vararr)
-}</code></pre>
+  <span class="kw">list</span>(<span class="dt">outarr=</span>outarr, <span class="dt">meanarr=</span>meanarr, <span class="dt">vararr=</span>vararr)
+}</code></pre></div>
 <p>The first component of the output from multisimf is the response for each simulation - nsim outputs from allstartf (in this example, 10 simulations). The next component of the output is the mean across the simulations. The final component is the variance across simulations.</p>
 <p>Because columns represent potential sampling nodes, the mean of a column (in the second component of the output) is the mean number of nodes invaded by the time the invasion would be detected at that node. The mean of the variance in a column (in the third component of the output) indicates how consistently the mean number of nodes would have been invaded.</p>
 <p>(AN OPTION NOT TO SHOW ALL SIMULATION RESULTS WILL BE INCLUDED)</p>
-<pre class="r"><code>multisimf(adjmat3=sAmat, stoch=T, nsim=10)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">multisimf</span>(<span class="dt">adjmat3=</span>sAmat, <span class="dt">stoch=</span>T, <span class="dt">nsim=</span><span class="dv">10</span>)</code></pre></div>
 <pre><code>## $outarr
 ## , , 1
 ## 
@@ -434,39 +542,39 @@ alloutmat
 ## , , 2
 ## 
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    2    4    4
+## [1,]    1    3    4    3
 ## [2,]    1    1    1    1
-## [3,]    1    1    1    1
+## [3,]    2    2    1    2
 ## [4,]    1    1    1    1
 ## 
 ## , , 3
 ## 
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    1    1    1
-## [2,]    3    1    3    3
+## [1,]    1    2    3    2
+## [2,]    2    1    2    2
 ## [3,]    1    1    1    1
 ## [4,]    1    1    1    1
 ## 
 ## , , 4
 ## 
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    2    2    2
+## [1,]    1    1    1    1
 ## [2,]    2    1    2    2
-## [3,]    1    1    1    1
+## [3,]    2    2    1    2
 ## [4,]    1    1    1    1
 ## 
 ## , , 5
 ## 
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    2    2    2
-## [2,]    1    1    1    1
+## [1,]    1    1    1    1
+## [2,]    2    1    2    2
 ## [3,]    2    2    1    2
 ## [4,]    1    1    1    1
 ## 
 ## , , 6
 ## 
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    1    1    1
+## [1,]    1    3    3    3
 ## [2,]    2    1    2    2
 ## [3,]    1    1    1    1
 ## [4,]    1    1    1    1
@@ -474,7 +582,7 @@ alloutmat
 ## , , 7
 ## 
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    3    4    3
+## [1,]    1    2    2    2
 ## [2,]    3    1    3    3
 ## [3,]    1    1    1    1
 ## [4,]    1    1    1    1
@@ -484,37 +592,37 @@ alloutmat
 ##      [,1] [,2] [,3] [,4]
 ## [1,]    1    3    4    3
 ## [2,]    3    1    3    3
-## [3,]    2    2    1    2
+## [3,]    1    1    1    1
 ## [4,]    1    1    1    1
 ## 
 ## , , 9
 ## 
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    2    4    4
-## [2,]    2    1    2    2
+## [1,]    1    1    1    1
+## [2,]    3    1    3    3
 ## [3,]    1    1    1    1
 ## [4,]    1    1    1    1
 ## 
 ## , , 10
 ## 
 ##      [,1] [,2] [,3] [,4]
-## [1,]    1    2    2    2
-## [2,]    3    1    3    3
-## [3,]    2    2    1    2
+## [1,]    1    2    4    4
+## [2,]    1    1    1    1
+## [3,]    1    1    1    1
 ## [4,]    1    1    1    1
 ## 
 ## 
 ## $meanarr
 ##      [,1] [,2] [,3] [,4]
-## [1,]  1.0  1.9  2.5  2.3
-## [2,]  2.3  1.0  2.3  2.3
+## [1,]  1.0  1.9  2.4  2.1
+## [2,]  2.2  1.0  2.2  2.2
 ## [3,]  1.4  1.4  1.0  1.4
 ## [4,]  1.0  1.0  1.0  1.0
 ## 
 ## $vararr
 ##           [,1]      [,2]      [,3]      [,4]
-## [1,] 0.0000000 0.5444444 1.8333333 1.3444444
-## [2,] 0.6777778 0.0000000 0.6777778 0.6777778
+## [1,] 0.0000000 0.7666667 1.8222222 1.2111111
+## [2,] 0.6222222 0.0000000 0.6222222 0.6222222
 ## [3,] 0.2666667 0.2666667 0.0000000 0.2666667
 ## [4,] 0.0000000 0.0000000 0.0000000 0.0000000</code></pre>
 </div>
@@ -522,53 +630,53 @@ alloutmat
 <h2>Weighted likelihood of a node being an entry point into network</h2>
 <p>The calculations of means up to this point have been based on the assumption that each node is equally likely to be the starting node. (Alternative functions, under preparation, do include the option for nodes to have different probabilities of invasive establishment - with suffix wt)</p>
 <p>The function wtsimf uses output from multisimf to evaluate the mean number of nodes reached when invasion would be detected at each potential sampling node, where potential starting nodes may have different probabilities of functioning as starting nodes. For example, higher risk of being the starting node might result from a node’s role as a port, or weather conditions associated with a node.</p>
-<pre class="r"><code>wtsimf &lt;- function(msf.out, adjmat5, wtvec, nodenam=NA) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wtsimf &lt;-<span class="st"> </span><span class="cf">function</span>(msf.out, adjmat5, wtvec, <span class="dt">nodenam=</span><span class="ot">NA</span>) {
 
-  dimL &lt;- dim(adjmat5)[1]
+  dimL &lt;-<span class="st"> </span><span class="kw">dim</span>(adjmat5)[<span class="dv">1</span>]
 
-  matop &lt;- msf.out$meanarr
-  wtarr &lt;- wtvec * matop
+  matop &lt;-<span class="st"> </span>msf.out<span class="op">$</span>meanarr
+  wtarr &lt;-<span class="st"> </span>wtvec <span class="op">*</span><span class="st"> </span>matop
 
-  # find failure rate for each sampling node
-  sampfail &lt;- colSums(wtarr)
-  tsampfail &lt;- data.frame(1:dimL, sampfail, nodenam)
+  <span class="co"># find failure rate for each sampling node</span>
+  sampfail &lt;-<span class="st"> </span><span class="kw">colSums</span>(wtarr)
+  tsampfail &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dv">1</span><span class="op">:</span>dimL, sampfail, nodenam)
   
-  list(wtarr=wtarr, tsampfail=tsampfail)
-}</code></pre>
+  <span class="kw">list</span>(<span class="dt">wtarr=</span>wtarr, <span class="dt">tsampfail=</span>tsampfail)
+}</code></pre></div>
 <p>This gives the failure rate. Sometimes a more useful summary might be expressing this in terms of success rates, in the sense of the number of nodes that are not infected when the pathogen is detected by a sampling node.</p>
 <p>Suppose the weights indicating the probability that each of four nodes is the introduction node are as follows.</p>
-<pre class="r"><code>wtvec.ex &lt;- c(0.001,0.2,0.798,0.001) # weights indicating the relative likelihood that each of four nodes is the introduction node for an invasion 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wtvec.ex &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.001</span>,<span class="fl">0.2</span>,<span class="fl">0.798</span>,<span class="fl">0.001</span>) <span class="co"># weights indicating the relative likelihood that each of four nodes is the introduction node for an invasion </span>
 
-msf.outex &lt;- multisimf(adjmat3=sAmat, stoch=T, nsim=10)
+msf.outex &lt;-<span class="st"> </span><span class="kw">multisimf</span>(<span class="dt">adjmat3=</span>sAmat, <span class="dt">stoch=</span>T, <span class="dt">nsim=</span><span class="dv">10</span>)
 
-wtsimf(msf.out=msf.outex, adjmat5=sAmat, wtvec=wtvec.ex)</code></pre>
+<span class="kw">wtsimf</span>(<span class="dt">msf.out=</span>msf.outex, <span class="dt">adjmat5=</span>sAmat, <span class="dt">wtvec=</span>wtvec.ex)</code></pre></div>
 <pre><code>## $wtarr
 ##        [,1]   [,2]   [,3]   [,4]
-## [1,] 0.0010 0.0023 0.0028 0.0023
-## [2,] 0.3800 0.2000 0.3800 0.3800
-## [3,] 1.0374 1.0374 0.7980 1.0374
+## [1,] 0.0010 0.0023 0.0029 0.0026
+## [2,] 0.5000 0.2000 0.4600 0.5000
+## [3,] 1.1172 1.1172 0.7980 1.1172
 ## [4,] 0.0010 0.0010 0.0010 0.0010
 ## 
 ## $tsampfail
 ##   X1.dimL sampfail nodenam
-## 1       1   1.4194      NA
-## 2       2   1.2407      NA
-## 3       3   1.1818      NA
-## 4       4   1.4207      NA</code></pre>
-<pre class="r"><code>wtsimf(msf.out=msf.outex, adjmat5=sAmat, wtvec=wtvec.ex, nodenam=c(&quot;KS&quot;,&quot;NE&quot;,&quot;ND&quot;,&quot;SD&quot;))</code></pre>
+## 1       1   1.6192      NA
+## 2       2   1.3205      NA
+## 3       3   1.2619      NA
+## 4       4   1.6208      NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">wtsimf</span>(<span class="dt">msf.out=</span>msf.outex, <span class="dt">adjmat5=</span>sAmat, <span class="dt">wtvec=</span>wtvec.ex, <span class="dt">nodenam=</span><span class="kw">c</span>(<span class="st">&quot;KS&quot;</span>,<span class="st">&quot;NE&quot;</span>,<span class="st">&quot;ND&quot;</span>,<span class="st">&quot;SD&quot;</span>))</code></pre></div>
 <pre><code>## $wtarr
 ##        [,1]   [,2]   [,3]   [,4]
-## [1,] 0.0010 0.0023 0.0028 0.0023
-## [2,] 0.3800 0.2000 0.3800 0.3800
-## [3,] 1.0374 1.0374 0.7980 1.0374
+## [1,] 0.0010 0.0023 0.0029 0.0026
+## [2,] 0.5000 0.2000 0.4600 0.5000
+## [3,] 1.1172 1.1172 0.7980 1.1172
 ## [4,] 0.0010 0.0010 0.0010 0.0010
 ## 
 ## $tsampfail
 ##   X1.dimL sampfail nodenam
-## 1       1   1.4194      KS
-## 2       2   1.2407      NE
-## 3       3   1.1818      ND
-## 4       4   1.4207      SD</code></pre>
+## 1       1   1.6192      KS
+## 2       2   1.3205      NE
+## 3       3   1.2619      ND
+## 4       4   1.6208      SD</code></pre>
 <p>Using the weights based on the number of information sources, or the quality of information sources, is one way to integrate the socioeconomic network and the biophysical network, with an egocentric network focus. There are many other possibilities for linking the two networks, potentially drawing on more information about the network of information communication. An example of this analysis applied to potential spread of disease through a seed system is available in</p>
 <p>Buddenhagen, C. E., J. F. Hernandez Nopsa, K. F. Andersen, J. Andrade-Piedra, G. A. Forbes, P. Kromann, S. Thomas-Sharma, P. Useche, and K. A. Garrett. 2017. Epidemic network analysis for mitigation of invasive pathogens in seed systems: Potato in Ecuador. Phytopathology 107:1209-1218.</p>
 <p>Andersen KF, Buddenhagen CE, Rachkara P, Gibson R, Kalule S, Phillips D, Garrett KA, 2018. Modeling epidemics in seed systems and landscapes to guide management strategies: The case of sweetpotato in Northern Uganda. Phytopathology, <a href="https://doi.org/10.1094/PHYTO-03-18-0072-R" class="uri">https://doi.org/10.1094/PHYTO-03-18-0072-R</a></p>
@@ -577,6 +685,8 @@ wtsimf(msf.out=msf.outex, adjmat5=sAmat, wtvec=wtvec.ex)</code></pre>
 
 
 
+</div>
+</div>
 
 </div>
 

@@ -1,7 +1,7 @@
 
 
 name: RTB Seed System Cluter Ibadan, Nigeria 2019
-output_dir: '.' 
+output_dir: '.'
 navbar:
   title: CC2.1 R Workshop
   left:
