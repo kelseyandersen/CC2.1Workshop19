@@ -300,7 +300,7 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="APS2018_Tidyverse.html">Introduction to R</a>
+      <a href="CC2.1_IntroToR.html">Introduction to R</a>
     </li>
   </ul>
 </li>
@@ -338,7 +338,7 @@ div.tocify {
 
 
 <ul>
-<li><a href="PDFFiles/ICPP2018_EpidemicNetworks.pdf">Epidemic Networks</a></li>
+<li><a href="PDFFiles/2019Ibadan_EpidemicNetworks.pdf">Epidemic Networks</a></li>
 </ul>
 <div id="matrices-in-r-epidemic-spread-over-time" class="section level2">
 <h2>Matrices in R: Epidemic spread over time</h2>
@@ -482,16 +482,16 @@ Amat &lt;-<span class="st"> </span>Amat<span class="op">*</span><span class="dv"
 <span class="kw">diag</span>(Amat) &lt;-<span class="st"> </span><span class="dv">1</span> <span class="co"># set the diagonals to 1 so that if a node is infected, it stays infected</span>
 Amat <span class="co"># our randomly generated matrix</span></code></pre></div>
 <pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
-##  [1,]    1    0    1    0    0    0    0    0    1     0
-##  [2,]    1    1    1    1    0    0    0    0    0     0
-##  [3,]    1    0    1    0    0    0    1    0    1     1
-##  [4,]    1    0    1    1    1    0    0    0    0     0
-##  [5,]    1    1    1    0    1    1    0    0    1     1
-##  [6,]    0    0    1    1    0    1    0    0    0     0
-##  [7,]    0    1    0    1    1    0    1    1    1     0
-##  [8,]    0    0    0    1    0    0    0    1    1     0
-##  [9,]    1    1    1    0    0    1    1    0    1     0
-## [10,]    1    1    0    1    1    1    0    1    1     1</code></pre>
+##  [1,]    1    1    1    0    0    0    1    1    0     1
+##  [2,]    1    1    1    0    0    0    1    0    1     1
+##  [3,]    0    1    1    1    1    0    0    1    1     1
+##  [4,]    1    0    1    1    0    0    1    0    0     0
+##  [5,]    0    0    0    0    1    1    0    1    1     0
+##  [6,]    1    0    0    1    0    1    1    1    0     0
+##  [7,]    0    0    1    0    1    0    1    0    0     0
+##  [8,]    0    1    0    0    0    1    0    1    1     1
+##  [9,]    0    0    0    0    0    1    0    1    1     0
+## [10,]    0    1    1    0    0    1    0    0    0     1</code></pre>
 <p> </p>
 <p>Plot to see you network</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Mat3 &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>(Amat)
@@ -515,7 +515,7 @@ df</code></pre></div>
 ##  [7,]     1     1
 ##  [8,]     1     1
 ##  [9,]     1     1
-## [10,]     0     0</code></pre>
+## [10,]     0     1</code></pre>
 </div>
 </div>
 <div id="case-study-sweetpotato-in-uganda" class="section level2">
@@ -577,9 +577,9 @@ fix.layout &lt;-<span class="st"> </span><span class="kw">layout_with_dh</span>(
 FullNet2 &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(FullNet)
 FullNet3 &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>(FullNet2)
 FullNet3</code></pre></div>
-<pre><code>## IGRAPH 92e7087 DN-- 126 283 -- 
+<pre><code>## IGRAPH 1792934 DN-- 126 283 -- 
 ## + attr: name (v/c)
-## + edges from 92e7087 (vertex names):
+## + edges from 1792934 (vertex names):
 ##  [1] S_1 -&gt;V_30 S_1 -&gt;V_48 S_1 -&gt;V_58 S_1 -&gt;V_95 S_1 -&gt;V_98 S_10-&gt;V_30
 ##  [7] S_10-&gt;V_35 S_10-&gt;V_53 S_10-&gt;V_58 S_10-&gt;V_86 S_10-&gt;V_89 S_10-&gt;V_97
 ## [13] S_10-&gt;V_98 S_11-&gt;V_30 S_11-&gt;V_35 S_11-&gt;V_53 S_11-&gt;V_58 S_11-&gt;V_86
@@ -740,10 +740,8 @@ v_<span class="dv">9</span>
 v_<span class="dv">9</span> &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(v_<span class="dv">9</span> <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)
 <span class="kw">as_tibble</span>(v_<span class="dv">9</span>)
 timestatus &lt;-<span class="st"> </span><span class="kw">cbind</span>(nodes, vec, v_<span class="dv">2</span>, v_<span class="dv">3</span>, v_<span class="dv">4</span>, v_<span class="dv">5</span>, v_<span class="dv">6</span>, v_<span class="dv">7</span>, v_<span class="dv">8</span>, v_<span class="dv">9</span>)
-timestatus &lt;-<span class="st"> </span><span class="kw">as.tibble</span>(timestatus)</code></pre></div>
-<pre><code>## Warning: `as.tibble()` is deprecated, use `as_tibble()` (but mind the new semantics).
-## This warning is displayed once per session.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">timestatus
+timestatus &lt;-<span class="st"> </span><span class="kw">as.tibble</span>(timestatus)
+timestatus
 
 
 #### Time 10
@@ -787,11 +785,11 @@ timestatus</code></pre></div>
 <span class="kw">plot</span>(FullNet3, <span class="dt">edge.arrow.size=</span>.<span class="dv">2</span>, <span class="dt">vertex.size=</span><span class="dv">7</span>, <span class="dt">vertex.label.cex=</span>.<span class="dv">4</span>, <span class="dt">vertex.label.color=</span><span class="st">&#39;black&#39;</span>, <span class="dt">layout =</span> l)</code></pre></div>
 <p><img src="EpidemicNetworks_files/figure-html/unnamed-chunk-22-8.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(FullNet3)<span class="op">$</span>color &lt;-<span class="st"> </span><span class="kw">ifelse</span>(timestatus<span class="op">$</span>v_<span class="dv">9</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, <span class="st">&quot;tomato&quot;</span>, <span class="st">&quot;white&quot;</span>)
-<span class="kw">plot</span>(FullNet3, <span class="dt">edge.arrow.size=</span>.<span class="dv">2</span>, <span class="dt">vertex.size=</span><span class="dv">7</span>, <span class="dt">vertex.label.cex=</span>.<span class="dv">4</span>, <span class="dt">vertex.label.color=</span><span class="st">&#39;black&#39;</span>, <span class="dt">layout =</span> l)
-
-<span class="kw">V</span>(FullNet3)<span class="op">$</span>color &lt;-<span class="st"> </span><span class="kw">ifelse</span>(timestatus<span class="op">$</span>v_<span class="dv">10</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, <span class="st">&quot;tomato&quot;</span>, <span class="st">&quot;white&quot;</span>)
 <span class="kw">plot</span>(FullNet3, <span class="dt">edge.arrow.size=</span>.<span class="dv">2</span>, <span class="dt">vertex.size=</span><span class="dv">7</span>, <span class="dt">vertex.label.cex=</span>.<span class="dv">4</span>, <span class="dt">vertex.label.color=</span><span class="st">&#39;black&#39;</span>, <span class="dt">layout =</span> l)</code></pre></div>
 <p><img src="EpidemicNetworks_files/figure-html/unnamed-chunk-22-9.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(FullNet3)<span class="op">$</span>color &lt;-<span class="st"> </span><span class="kw">ifelse</span>(timestatus<span class="op">$</span>v_<span class="dv">10</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, <span class="st">&quot;tomato&quot;</span>, <span class="st">&quot;white&quot;</span>)
+<span class="kw">plot</span>(FullNet3, <span class="dt">edge.arrow.size=</span>.<span class="dv">2</span>, <span class="dt">vertex.size=</span><span class="dv">7</span>, <span class="dt">vertex.label.cex=</span>.<span class="dv">4</span>, <span class="dt">vertex.label.color=</span><span class="st">&#39;black&#39;</span>, <span class="dt">layout =</span> l)</code></pre></div>
+<p><img src="EpidemicNetworks_files/figure-html/unnamed-chunk-22-10.png" width="672" /></p>
 <p>Plot the number of nodes infected over time with Node 1 as starting node</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">timestatus1 &lt;-<span class="st"> </span>timestatus <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">gather</span>(<span class="st">&#39;vec&#39;</span>, <span class="st">&#39;v_2&#39;</span>, <span class="st">&#39;v_3&#39;</span>, <span class="st">&#39;v_4&#39;</span>, <span class="st">&#39;v_5&#39;</span>, <span class="st">&#39;v_6&#39;</span>, <span class="st">&#39;v_7&#39;</span>, <span class="st">&#39;v_8&#39;</span>, <span class="st">&#39;v_9&#39;</span>, <span class="st">&#39;v_10&#39;</span>, <span class="dt">key =</span> <span class="st">&quot;Timestep&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;Status&quot;</span> )
@@ -863,16 +861,16 @@ Spread10</code></pre></div>
 ## # Groups:   Sim [?]
 ##      Sim  Step Number_of_Nodes
 ##    &lt;dbl&gt; &lt;dbl&gt;           &lt;dbl&gt;
-##  1     1     1               5
-##  2     1     2               8
-##  3     1     3              10
-##  4     1     4              11
-##  5     1     5              17
+##  1     1     1               2
+##  2     1     2               7
+##  3     1     3              11
+##  4     1     4              15
+##  5     1     5              16
 ##  6     1     6              21
 ##  7     1     7              26
-##  8     1     8              27
-##  9     1     9              29
-## 10     1    10              31
+##  8     1     8              29
+##  9     1     9              32
+## 10     1    10              37
 ## # … with 90 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot &lt;-<span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> Spread10, <span class="dt">mapping =</span> (<span class="kw">aes</span>(<span class="dt">x =</span> Step, <span class="dt">y =</span> Number_of_Nodes))) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">color =</span> <span class="st">&quot;gray70&quot;</span>) <span class="op">+</span>
