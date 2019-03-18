@@ -83,6 +83,7 @@ hist(WithR, xlab = "Self-Reported R Proficiency")
 
 
 ## Getting Data Into R 
+*[StripeRust.csv](Data/StripeRust.csv)  
 
 
 Now make sure to place your "StripeRust.csv" file in the working directory that we set, then load the data in using the "read.csv" *function*.
