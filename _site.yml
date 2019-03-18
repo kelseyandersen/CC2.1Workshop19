@@ -21,6 +21,8 @@ navbar:
     menu:
     - text: seedHealth
       href: seedHealth.html
+    - text: INA
+      href: INA.html
   - text: Resources
     menu:
     - text: Resources
