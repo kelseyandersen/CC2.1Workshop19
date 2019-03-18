@@ -220,7 +220,6 @@ This function evaluates multiple simulations for multiple parameter combinations
 
 ```{r echo=T}
 
-install.packages("lattice") # remove '#' at beginning of line to install package
 library(lattice)
 
 #Low variability in selection, low initial infection (20%) 
