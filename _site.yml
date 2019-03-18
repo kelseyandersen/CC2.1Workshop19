@@ -20,13 +20,13 @@ navbar:
   - text: RTB Packages
     menu:
     - text: seedHealth
-      href: seedHealth-v8 IITA workshop.Rmd
+      href: seedHealth.html
     - text: INA
       href: 
   - text: Resources
     menu:
     - text: Resources
-      href: Resources.Rmd
+      href: Resources.html
 
       
 output:
